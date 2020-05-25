@@ -33,14 +33,14 @@
                 :data="logs" 
                 v-loading="loading" 
                 class="logsTable" 
-                size="small" 
+                size="large" 
                 border 
                 :row-class-name="rowClass"
             >
-                <el-table-column type="index" :index="getRowIndex"></el-table-column>
-                <el-table-column prop="InsertTime" label="日期" width="180"></el-table-column>
-                <el-table-column prop="LogLevel" label="级别" width="60"></el-table-column>
-                <el-table-column prop="Field" label="记录者" width="180"></el-table-column>
+                <el-table-column type="index" :index="getRowIndex" align="center"></el-table-column>
+                <el-table-column prop="InsertTime" label="日期" width="180" align="center"  ></el-table-column>
+                <el-table-column prop="LogLevel" label="级别" width="80" align="center"></el-table-column>
+                <el-table-column prop="Field" label="记录者" width="180" align="center"></el-table-column>
                 <el-table-column prop="Content" label="消息"></el-table-column>
             </el-table>
             <br/>

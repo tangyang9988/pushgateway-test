@@ -289,7 +289,6 @@ export default class mnlist extends Vue {
 <style scoped>
 /* 覆盖卡片样式 */
 .box-card {
-  height: 480px;
   width: 100%;
 }
 .butAddRow {
