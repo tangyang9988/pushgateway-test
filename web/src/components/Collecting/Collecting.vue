@@ -9,8 +9,10 @@
               <span>采集设备配置</span>
           </div>
       </div>
-      <el-button type="primary" @click="showCollectingView" size="small">新增</el-button>
-      <el-button type="primary" @click="flash" size="small">刷新</el-button>
+      <div style="margin-bottom:10px;">
+        <el-button type="primary" @click="showCollectingView" size="small">新增</el-button>
+        <el-button type="primary" @click="flash" size="small">刷新</el-button>
+      </div>
       <el-table
         ref="rtuDevices"
         :data="rtuDevices"
