@@ -55,6 +55,7 @@
           :span="4"
           v-for="(card, index) in cardList"
           :key="index"
+          style="display:flex;justify-content:center;"
         >
           <el-card
             :class="activeCard == card ? 'card-cell card-active':'card-cell'"
@@ -62,7 +63,8 @@
           >
             <div slot="header" class="card-header">
               <div>
-                <el-button class="card-header-light" icon="el-icon-s-opportunity" :type="card.Online?'success':'info'" size="large"></el-button>
+                <img :class="card.Online?'light-green':'light-grey'" :src="LightImg" alt="状态灯">
+                <!-- <el-button class="card-header-light" icon="el-icon-s-opportunity" :type="card.Online?'success':'info'" size="large"></el-button> -->
                 <span class="card-header-rtuName" @click="openRTUInfo(card)">{{card.RtuName}}</span>
               </div>
               <div>
@@ -71,8 +73,12 @@
             </div>
 
             <div class="card-content">
-              <span>所属项目：{{card.TProject.ProjectName}}</span>
-              <span style="margin-top:10px;">MN：{{card.RtuMn}}</span>
+              <div>
+                <span class="card-content-label">所属项目</span>{{card.TProject.ProjectName}}
+              </div>
+              <div style="margin-top:10px;">
+                <span class="card-content-label">MN</span>{{card.RtuMn}}
+              </div>
             </div>
           </el-card>
         </el-col>
@@ -94,6 +100,7 @@ import GaugeCard from "@/components/GaugeCard.vue";
 import DtuService from "@/services/DtuService";
 import GmsMessages from "../Device/GmsMessages.vue";
 import CardView from "./CardView.vue";
+import LightImg from "@/assets/images/light.png";
 
 @Component({
   components: {
@@ -104,6 +111,7 @@ import CardView from "./CardView.vue";
 })
 export default class CardList extends Vue {
 
+  LightImg:any = LightImg;
   gagues = { Nodes: 0, Devices: 0, Sessions: 0 };
   loading = false;
   devices:any = []; //设备列表
@@ -447,6 +455,18 @@ export default class CardList extends Vue {
 .el-card__header {
   padding: 15px;
 }
+.light-green {
+  background: #67C23A;
+  padding: 3px 5px;
+  border-radius: 50%;
+  vertical-align: middle;
+}
+.light-grey {
+  background: #909399;
+  padding: 3px 5px;
+  border-radius: 50%;
+  vertical-align: middle;
+}
 .card-header-light {
   padding: 3px;
 }
@@ -464,16 +484,24 @@ export default class CardList extends Vue {
 .card-content {
   display: flex;
   flex-direction: column;
-  font-size: 15px;
+  font-size: 14px;
+  padding-left: 10px;
+}
+.card-content-label {
+  color: #9b9b9b;
+  display: inline-block;
+  margin-right: 15px;
 }
 .card-cell {
   width: 270px;
   min-width: 270px;
-  margin: 3px;
+  margin: 6px 3px;
 }
 .card-active {
-  background: #e1f3e1;
+  background: rgb(233, 233, 233);
 }
-
+.card-active .card-header-rtuName {
+  color: dodgerblue;
+}
 </style>
 
