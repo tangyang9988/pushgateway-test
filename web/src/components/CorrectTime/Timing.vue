@@ -2,7 +2,13 @@
   <div style="height:100%;">
     <header-card-list></header-card-list>
     <el-card class="card">
-      <label for>校时</label>
+      
+      <div slot="header">
+          <div class="page-title">
+              <img :src="pageTitleImg" alt="">
+              <span>校时</span>
+          </div>
+      </div>
       
       <div class="dlgRecriminateControl-form">
         获取数采仪时间：{{currentTime}}
@@ -23,6 +29,7 @@ import { Component, Prop, Watch, Vue } from "vue-property-decorator";
 import HeaderCardList from "../RTU/HeaderCardList.vue";
 import CollectService from "@/services/CollectService";
 import DtuService from "@/services/DtuService";
+import pageTitleImg from '@/assets/images/pageTitle.png'
 
 @Component({
   components: {
@@ -33,6 +40,7 @@ export default class Timing extends Vue {
   /** 当前设备 */
   @Prop({ default: null }) dtu!: any;
 
+  pageTitleImg :any = pageTitleImg
   currentTime = "";
   cp="";
   cn = "1012";
@@ -89,5 +97,16 @@ export default class Timing extends Vue {
 }
 .card {
   height: 40%;
+}
+
+.page-title {
+  display: flex;
+  align-items: center;
+  color: #606266;
+  font-size: 14px;
+  margin-right: 70px;
+}
+.page-title img {
+  margin-right: 5px;
 }
 </style>

@@ -2,7 +2,13 @@
   <div style="height:100%;">
     <header-card-list></header-card-list>
     <el-card>
-      <label for>反控</label>
+      
+      <div slot="header">
+          <div class="page-title">
+              <img :src="pageTitleImg" alt="">
+              <span>反控设置</span>
+          </div>
+      </div>
       <div class="dlgRecriminateControl-form">
         <el-form ref="form" :model="form" :rules="formRules" label-width="80px" size="small">
           <el-form-item label="反控指令" prop="recriminatId">
@@ -177,6 +183,7 @@
 import { Component, Prop, Watch, Vue } from "vue-property-decorator";
 import HeaderCardList from "../RTU/HeaderCardList.vue";
 import DtuService from "@/services/DtuService";
+import pageTitleImg from '@/assets/images/pageTitle.png'
 
 @Component({
   components: {
@@ -187,6 +194,7 @@ export default class DynamicControlCard extends Vue {
   /** 当前设备 */
   @Prop({ default: null }) dtu!: any;
 
+  pageTitleImg :any = pageTitleImg
   cp = "";
   cn = "";
   uuid ="";
@@ -388,5 +396,16 @@ export default class DynamicControlCard extends Vue {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.page-title {
+  display: flex;
+  align-items: center;
+  color: #606266;
+  font-size: 14px;
+  margin-right: 70px;
+}
+.page-title img {
+  margin-right: 5px;
 }
 </style>

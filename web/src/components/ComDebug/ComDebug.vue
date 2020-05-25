@@ -2,8 +2,12 @@
   <div>
     <header-card-list></header-card-list>
     <el-card style="margin-top:18px;">
+      
       <div slot="header">
-        <span>串口调试</span>
+        <div class="page-title">
+          <img :src="pageTitleImg" alt="">
+          <span>串口调试</span>
+        </div>
       </div>
 
       <el-form
@@ -125,12 +129,14 @@
 import { Component, Vue } from "vue-property-decorator";
 import ComDebugService from "@/services/ComDebugService";
 import HeaderCardList from "../RTU/HeaderCardList.vue";
+import pageTitleImg from '@/assets/images/pageTitle.png'
 
 @Component({components: {
     HeaderCardList: HeaderCardList,
 }})
 export default class ComDebug extends Vue {
   
+  pageTitleImg :any = pageTitleImg
   // 串口选择框数据
   comOption:any[] = [
     {
@@ -445,6 +451,17 @@ export default class ComDebug extends Vue {
     font-size: 14px;
     overflow: auto;
   }
+  
+.page-title {
+  display: flex;
+  align-items: center;
+  color: #606266;
+  font-size: 14px;
+  margin-right: 70px;
+}
+.page-title img {
+  margin-right: 5px;
+}
 </style>
 
 

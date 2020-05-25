@@ -10,7 +10,13 @@
 
     <!-- <el-button @click="load" type="primary">刷新</el-button> -->
     <el-card>
-      动态管控
+      <div slot="header">
+          <div class="page-title">
+              <img :src="pageTitleImg" alt="">
+              <span>动态管控</span>
+          </div>
+      </div>
+      
       <el-button @click="CloseDynamic()" type="danger" size="small" style="float:right">关闭动态管控</el-button>
       <el-button @click="OpenDynamic()" type="primary" size="small" style="float:right;margin-right:1%">开启动态管控</el-button>
       <br />
@@ -26,7 +32,12 @@
     </el-card>
     
     <el-card style="margin-top:8px;">
-      实时动态图
+      <div slot="header">
+          <div class="page-title">
+              <img :src="pageTitleImg" alt="">
+              <span>实时动态图</span>
+          </div>
+      </div>
       <div style="width:100%;"><line-chart :data="chartData" height="200px"></line-chart></div>
       <!-- <div style="float:right;margin-right:0%;margin-top:-17%;width:50%"><line-chart :data="[[new Date(), 5], [1368174456, 4], ['2013-05-07 00:00:00 UTC', 7]]"></line-chart></div> -->
     </el-card>
@@ -44,6 +55,7 @@ Vue.use(Chartkick.use(Chart));
 
 import GaugeCard from "@/components/GaugeCard.vue";
 import HeaderCardList from "../RTU/HeaderCardList.vue";
+import pageTitleImg from '@/assets/images/pageTitle.png'
 
 @Component({
   components: {
@@ -82,6 +94,7 @@ export default class DynamicControlCard extends Vue {
     this.load();
   }
 
+  pageTitleImg :any = pageTitleImg
   dynamicData = []
   dynamicMessages=[]
   range = 2000; //时间范围
@@ -221,3 +234,17 @@ export default class DynamicControlCard extends Vue {
   }
 }
 </script>
+
+<style scoped>
+
+.page-title {
+  display: flex;
+  align-items: center;
+  color: #606266;
+  font-size: 14px;
+  margin-right: 70px;
+}
+.page-title img {
+  margin-right: 5px;
+}
+</style>

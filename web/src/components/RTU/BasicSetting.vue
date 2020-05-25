@@ -3,7 +3,13 @@
     <header-card-list></header-card-list>
     <br />
     <el-card>
-      <label for="">基础设置</label>
+      
+      <div slot="header">
+          <div class="page-title">
+              <img :src="pageTitleImg" alt="">
+              <span>基础设置</span>
+          </div>
+      </div>
 
       <el-form ref="form" :model="ruleForm" :rules="rules">
         <div class="baseSetting-form">
@@ -47,6 +53,7 @@
 import { Component, Vue } from "vue-property-decorator";
 import HeaderCardList from "./HeaderCardList.vue";
 import DtuService from "@/services/DtuService";
+import pageTitleImg from '@/assets/images/pageTitle.png'
 
 @Component({
   components: {
@@ -55,6 +62,7 @@ import DtuService from "@/services/DtuService";
 })
 export default class BaseSetting2 extends Vue {
 
+  pageTitleImg :any = pageTitleImg
   loading = false
   options = [
     {value: 5,label: '5分钟'},
@@ -158,6 +166,17 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button {
   float: right;
   margin-right: 5%;
   margin-top: 5%;
+}
+
+.page-title {
+  display: flex;
+  align-items: center;
+  color: #606266;
+  font-size: 14px;
+  margin-right: 70px;
+}
+.page-title img {
+  margin-right: 5px;
 }
 </style>
 

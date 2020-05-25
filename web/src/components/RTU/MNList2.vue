@@ -5,8 +5,12 @@
     </div>
     <br />
     <el-card class="box-card">
-      <div slot="header" class="clearfix">
-        <span>上传设置</span>
+      
+      <div slot="header">
+          <div class="page-title">
+              <img :src="pageTitleImg" alt="">
+              <span>上传设置</span>
+          </div>
       </div>
 
       <div>
@@ -104,6 +108,7 @@ import ResendData1 from "./ResendData.vue";
 import HeaderCardList from "./HeaderCardList.vue";
 import RtuService from "@/services/RtuService";
 import FileSaver from "file-saver";
+import pageTitleImg from '@/assets/images/pageTitle.png'
 
 @Component({
   name: "mnlist",
@@ -114,6 +119,7 @@ import FileSaver from "file-saver";
   }
 })
 export default class mnlist extends Vue {
+  pageTitleImg :any = pageTitleImg
   mnaddvisable = false;
   resendData = false;
   mnmodifyVisable = false;
@@ -300,6 +306,17 @@ export default class mnlist extends Vue {
 
 .export-wrapper {
   margin-top: 20px;
+}
+
+.page-title {
+  display: flex;
+  align-items: center;
+  color: #606266;
+  font-size: 14px;
+  margin-right: 70px;
+}
+.page-title img {
+  margin-right: 5px;
 }
 </style>
 
