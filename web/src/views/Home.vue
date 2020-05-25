@@ -30,6 +30,7 @@ export default class Home extends Vue {
             this.$router.push({path: "/v/cardList"});
             // 获取用户登陆的权限，permission=1，暂时定义为超级管理员
             sessionStorage.setItem('permission', res.data.permission);
+            sessionStorage.setItem('username', this.user);
             // console.log(this.permission)
         }).catch(err => {
             this.loading = false

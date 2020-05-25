@@ -3,143 +3,76 @@
     <div style="margin-bottom:10px">
       <BreadCrumb></BreadCrumb>
     </div>
-    <el-row :gutter="20" class="proInfo">
-      <el-col :span="6">
-        <div class="grid-content bg-purple">
-          <!-- <label for>MN:{{MNStr}}</label> -->
-          <span class="mnS">MN:{{MNStr}}</span>
-        </div>
-      </el-col>
-      <el-col :span="6">
-        <div class="grid-content bg-purple">
-          <!-- <label for>所属项目：{{projectName}}</label> -->
-          <span class="mnS">所属项目：{{projectName}}</span>
-        </div>
-      </el-col>
-      <el-col :span="6">
-        <div class="grid-content bg-purple"></div>
-      </el-col>
-      <el-col :span="6">
-        <div class="grid-content bg-purple"></div>
-      </el-col>
-    </el-row>
+    <div class="proInfo">
+      <div class="page-title">
+        <img :src="pageTitleImg" alt="">
+        <span style="font-size: 18px;">MN：{{MNStr}}</span>
+      </div>
+      <div class="page-title">
+        <img :src="pageTitleImg" alt="">
+        <span style="font-size: 18px;">所属项目：{{projectName}}</span>
+      </div>
+    </div>
 
-    <!-- :gutter="120" -->
-    <el-row :gutter="40">
+    <el-row :gutter="20">
       <el-col :span="12" class="toolsHeight">
         <el-card :body-style="{ padding: '0px' }" class="cardHeight">
-          <div slot="header" class="clearfix">
-            <!-- <span>卡片名称</span> -->
-            <el-tabs>
-              <el-tab-pane label="工具栏" name="first"></el-tab-pane>
 
-              <el-row :gutter="20" class="row-bg">
-                <el-col :span="6">
-                  <div class="grid-content bg-purple">
-                    <el-button
-                      type="primary"
-                      class="toolsButtonWidth"
-                      size="small"
-                      @click="onShowDynamicControl"
-                    >动态管控</el-button>
-                  </div>
-                </el-col>
-                <el-col :span="6">
-                  <div class="grid-content bg-purple">
-                    <el-button
-                      type="primary"
-                      class="toolsButtonWidth"
-                      size="small"
-                      @click="openBasicSetting"
-                    >基础设置</el-button>
-                  </div>
-                </el-col>
-                <el-col :span="6">
-                  <div class="grid-content bg-purple">
-                    <el-button
-                      size="small"
-                      class="toolsButtonWidth"
-                      type="primary"
-                      @click="openMNList"
-                    >上位机设置</el-button>
-                  </div>
-                </el-col>
-                <el-col :span="6">
-                  <div class="grid-content bg-purple">
-                    <el-button
-                      type="primary"
-                      class="toolsButtonWidth"
-                      size="small"
-                      @click="openCollecting"
-                    >采集设备配置</el-button>
-                  </div>
-                </el-col>
-              </el-row>
+          <div slot="header">
+            <div class="page-title">
+              <img :src="pageTitleImg" alt="">
+              <span>工具栏</span>
+            </div>
+          </div>
 
-              <el-row :gutter="20" class="row-bg">
-                <el-col :span="6">
-                  <div class="grid-content bg-purple">
-                    <el-button size="small" type="primary" class="toolsButtonWidth" @click="openTiming">校时</el-button>
-                  </div>
-                </el-col>
-                <el-col :span="6">
-                  <div class="grid-content bg-purple">
-                    <el-button
-                      size="small"
-                      type="primary"
-                      class="toolsButtonWidth"
-                      @click="onShowDlgRecriminateControl"
-                    >反控设置</el-button>
-                  </div>
-                </el-col>
-                <el-col :span="6">
-                  <div class="grid-content bg-purple">
-                    <el-button size="small" class="toolsButtonWidth" plain>屏幕截图</el-button>
-                  </div>
-                </el-col>
-                <el-col :span="6">
-                  <div class="grid-content bg-purple">
-                    <el-button size="small" class="toolsButtonWidth" plain>重启数采仪</el-button>
-                  </div>
-                </el-col>
-              </el-row>
+          <div class="tools-content">
+            <div class="toolBtn-wrapper">
+                <el-button type="primary" class="toolsButtonWidth" size="small" @click="onShowDynamicControl">动态管控</el-button>
+                <el-button type="primary" class="toolsButtonWidth" size="small" @click="openBasicSetting">基础设置</el-button>
+                <el-button type="primary" class="toolsButtonWidth" size="small" @click="openMNList">上位机设置</el-button>
+                <el-button type="primary" class="toolsButtonWidth" size="small" @click="openCollecting">采集设备配置</el-button>
+            </div>
 
-              <el-row :gutter="20" class="row-bg">
-                <el-col :span="6">
-                  <div class="grid-content bg-purple">
-                    <el-button
-                      type="primary"
-                      size="small"
-                      class="toolsButtonWidth"
-                      @click="openComDebug"
-                    >串口调试</el-button>
-                  </div>
-                </el-col>
-              </el-row>
-            </el-tabs>
+            <div class="toolBtn-wrapper">
+                <el-button size="small" type="primary" class="toolsButtonWidth" @click="openTiming">校时</el-button>
+                <el-button size="small" type="primary" class="toolsButtonWidth" @click="onShowDlgRecriminateControl">反控设置</el-button>
+                <el-button size="small" class="toolsButtonWidth" plain>屏幕截图</el-button>
+                <el-button size="small" class="toolsButtonWidth" plain>重启数采仪</el-button>
+            </div>
+
+            <div class="toolBtn-wrapper">
+                <el-button type="primary" size="small" class="toolsButtonWidth" @click="openComDebug">串口调试</el-button>
+                <div><!-- flex布局--占个坑··· --></div>
+                <div><!-- flex布局--占个坑··· --></div>
+                <div><!-- flex布局--占个坑··· --></div>
+            </div>
           </div>
         </el-card>
       </el-col>
 
       <el-col :span="12" class="toolsHeight">
         <el-card :body-style="{ padding: '0px' }" class="cardHeight">
-          <div slot="header" class="clearfix">
-            <el-tabs>
-              <el-tab-pane label="系统执行信息" name="first"></el-tab-pane>
-              <el-table
-                :data="tableData"
-                height="150"
-                style="width: 100%"
-                :show-header="showHeader"
-              >
-                <el-table-column prop="execTime" width="150" label></el-table-column>
-                <!-- <el-table-column prop="name" label></el-table-column> -->
-                <el-table-column prop="commandName" label></el-table-column>
-
-                <el-table-column prop="execResult" label></el-table-column>
-              </el-table>
-            </el-tabs>
+          
+          <div slot="header">
+            <div class="page-title">
+              <img :src="pageTitleImg" alt="">
+              <span>系统执行信息</span>
+            </div>
           </div>
+
+          <el-tabs>
+            <el-table
+              :data="tableData"
+              height="150"
+              style="width: 100%"
+              :show-header="showHeader"
+              size="small"
+            >
+              <el-table-column prop="execTime" width="150" label></el-table-column>
+              <el-table-column prop="commandName" label></el-table-column>
+              <el-table-column prop="execResult" label></el-table-column>
+            </el-table>
+          </el-tabs>
         </el-card>
       </el-col>
     </el-row>
@@ -147,8 +80,8 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Watch, Vue } from "vue-property-decorator";
-// import MnList from "./MNList2.vue";
 import RTUInfo from "./RTUInfo.vue";
+import pageTitleImg from '@/assets/images/pageTitle.png'
 
 import BreadCrumb from "@/components/BreadCrumb.vue";
 @Component({
@@ -170,6 +103,7 @@ export default class HeaderCardList extends Vue {
     this.uuid = sessionStorage.getItem("uuid");
     this.initWebSocket();
   }
+  pageTitleImg :any = pageTitleImg
   projectName = ""; //项目名称
   MNStr = ""; //MN
   showHeader = false;
@@ -326,21 +260,34 @@ export default class HeaderCardList extends Vue {
   /* height: 9%; */
 }
 .proInfo {
-  margin-top: 20px;
-  margin-left: 10px;
-  margin-bottom: 10px;
+  display: flex;
+  margin: 15px 0;
+}
+.page-title {
+  display: flex;
+  align-items: center;
+  color: #606266;
+  font-size: 14px;
+  margin-right: 70px;
+}
+.page-title img {
+  margin-right: 5px;
 }
 .bread {
   width: 100%;
   margin-bottom: 20px;
 }
 
-.mnS {
-  width: 175px;
-  height: 28px;
-  font-size: 20px;
-  /* font-size: 14px; */
-  color: #606266;
-  line-height: 28px;
+/* 工具栏 */
+.tools-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+}
+.toolBtn-wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin: 8px 0;
 }
 </style>
