@@ -76,8 +76,6 @@
             </div>
           </el-card>
         </el-col>
-
-        <div class="clear"></div>
       </div>
     </div>
     <el-dialog title="历史消息" :visible.sync="dlgMessageVisible" width="80%">
@@ -138,6 +136,7 @@ export default class CardList extends Vue {
     this.countActive = type
     // 筛选列表
     this.filterList = []
+    this.cardList = []
     this.devices.forEach((item:any, index:number) => {
       if(type == 2) {
         this.filterList.push(item)
@@ -428,6 +427,9 @@ export default class CardList extends Vue {
 .headerBtn .el-input {
   width: auto;
 }
+.headerBtn-right .el-tag {
+  cursor: pointer;
+}
 /* 卡片列表 */
 #cards-box {
   min-width: 1685px;
@@ -451,6 +453,7 @@ export default class CardList extends Vue {
 .card-header-rtuName {
   margin-left: 5px;
   font-size: 15px;
+  cursor: pointer;
 }
 .card-header-historyInfo {
   padding: 3px;
@@ -472,18 +475,5 @@ export default class CardList extends Vue {
   background: #e1f3e1;
 }
 
-
-
-.text {
-  font-size: 14px;
-}
-
-.item {
-  margin-bottom: 18px;
-}
-
-.clear {
-  clear: both;
-}
 </style>
 
