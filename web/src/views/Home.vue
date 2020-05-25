@@ -5,7 +5,7 @@
         <el-input v-model="user" placeholder="Account..." prefix-icon="fas fa-user"> </el-input>
         <br/>
         <br/>
-        <el-input v-model="pwd" type="password" placeholder="Password..." prefix-icon="fas fa-lock"> </el-input>
+        <el-input v-model="pwd" type="password" placeholder="Password..." prefix-icon="fas fa-lock" @keyup.enter.native="onLogin"> </el-input>
         <br/>
         <br/>
         <el-button @click="onLogin" type="primary" :loading="loading" style="width:100%">Login</el-button>
