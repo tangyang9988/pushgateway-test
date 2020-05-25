@@ -2,10 +2,10 @@
   <div>
     <el-button @click="onCreate" type="primary" icon="fas fa-plus-circle fa-fw">新增项目</el-button>
     <div style="margin-top:10px">
-      <el-input v-model="input" placeholder="项目名称" style="width:200px"></el-input>
-      <el-input v-model="input" placeholder="负责人" style="width:200px;margin-left:20px"></el-input>
+      <el-input v-model="projectName" placeholder="项目名称" style="width:200px"></el-input>
+      <el-input v-model="LeaderName" placeholder="负责人" style="width:200px;margin-left:20px"></el-input>
       <el-button
-        @click="searchDTUs(proId)"
+        @click="load"
         type="primary"
         icon="el-icon-search"
         style="margin-left:20px"
@@ -66,10 +66,17 @@ export default class GmsProjects extends Vue {
   page = 1;
   total = 0;
   curPrj: any = null;
+  projectName:string = ''
+  LeaderName:string = ''
 
   load() {
     this.loading = true;
-    ProjectService.Query(this.pageSize, this.page)
+    ProjectService.Query(
+      this.projectName, // 项目名称
+      this.LeaderName,  // 负责人
+      this.pageSize, 
+      this.page
+    )
       .then(res => {
         this.total = res.total;
         this.$set(this, "projects", res.data);

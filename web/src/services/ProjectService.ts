@@ -3,9 +3,16 @@ import Channel from './Channel.ajax'
 export default class ProjectService {
 
     /** 查询项目列表 */
-    public static Query(pageSize: number, pageIndex: number): Promise<any> {
+    public static Query(projectName: string, LeaderName: string, pageSize: number, pageIndex: number): Promise<any> {
         // return Channel.invoke("project/query", { pageSize: pageSize, page: pageIndex });
-        return Channel.invoke("project/query", { pageSize: pageSize, page: pageIndex });
+        return Channel.invoke("project/query", 
+            { 
+                projectName: projectName,
+                LeaderName: LeaderName,
+                pageSize: pageSize, 
+                page: pageIndex 
+            }
+        );
     }
 
     /** 查询所有项目，用于绑定 */
