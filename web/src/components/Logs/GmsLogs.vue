@@ -1,7 +1,12 @@
 <template>
     <div>
         <el-card>
-            <div slot="header">日志消息</div>
+            <div slot="header">
+                <div class="page-title">
+                    <img :src="pageTitleImg" alt="">
+                    <span>日志消息</span>
+                </div>
+            </div>
             <div style="margin-bottom:10px;">
                 日志级别:
                 <el-select 
@@ -60,11 +65,13 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import LogService from "@/services/LogService";
+import pageTitleImg from '@/assets/images/pageTitle.png'
 
 @Component
 export default class GmsLogs extends Vue {
     @Prop({ default: '10.211.55.2' }) node!: string
 
+    pageTitleImg :any = pageTitleImg
     times = [new Date(new Date().getTime() - 24*60*60*1000), new Date()]
     timesOptions = {
         shortcuts: [
@@ -170,5 +177,16 @@ export default class GmsLogs extends Vue {
 
 .logsTable >>> .error-row {
     color: red;
+}
+
+.page-title {
+  display: flex;
+  align-items: center;
+  color: #606266;
+  font-size: 14px;
+  margin-right: 70px;
+}
+.page-title img {
+  margin-right: 5px;
 }
 </style>

@@ -1,52 +1,63 @@
 <template>
   <div>
-    <el-button @click="onCreate" type="primary" icon="fas fa-plus-circle fa-fw">新增项目</el-button>
-    <div style="margin-top:10px">
-      <el-input v-model="projectName" placeholder="项目名称" style="width:200px"></el-input>
-      <el-input v-model="LeaderName" placeholder="负责人" style="width:200px;margin-left:20px"></el-input>
-      <el-button
-        @click="load"
-        type="primary"
-        icon="el-icon-search"
-        style="margin-left:20px"
-      >查询</el-button>
-      <el-button @click="load" type="primary" icon="fas fa-sync-alt fa-fw">刷新</el-button>
-    </div>
-    <br />
-    <el-table
-      ref="table"
-      :data="projects"
-      v-loading="loading"
-      @current-change="onCurrentChanged"
-      border
-      stripe
-      highlight-current-row
-      readonly
-      size="small"
-    >
-      <el-table-column type="index" :index="getRowIndex" label="序号"></el-table-column>
-      <el-table-column prop="ProjectName" label="项目名称"></el-table-column>
-      <el-table-column prop="LeaderName" label="负责人"></el-table-column>
-      <el-table-column prop="LeaderMobile" label="联系电话" width="200"></el-table-column>
-      <el-table-column prop="TopicName" label="MQ Tag" width="100"></el-table-column>
-      <el-table-column label="操作" width="400" align="center">
-        <el-button @click="onEdit" type="primary" size="small">编辑</el-button>
-        <el-button @click="onDelete" type="primary" size="small">删除</el-button>
-      </el-table-column>
-    </el-table>
-    <br />
-    <!-- 分页组件 -->
-    <el-pagination
-      layout="prev, pager, next, total"
-      :page-size="pageSize"
-      :current-page.sync="page"
-      :total="total"
-      @current-change="load"
-    ></el-pagination>
-    <!-- 对话框 -->
-    <el-dialog title="项目信息" :visible.sync="dlgVisible" width="400px">
-      <project-view :project="curPrj" :visible="dlgVisible"></project-view>
-    </el-dialog>
+    <el-card>
+      <div slot="header">
+        <div class="page-title">
+          <img :src="pageTitleImg" alt="">
+          <span>项目管理</span>
+        </div>
+      </div>
+
+      <div>
+        <el-button @click="onCreate" type="primary" icon="fas fa-plus-circle fa-fw">新增项目</el-button>
+        <div style="margin-top:10px">
+          <el-input v-model="projectName" placeholder="项目名称" style="width:200px"></el-input>
+          <el-input v-model="LeaderName" placeholder="负责人" style="width:200px;margin-left:20px"></el-input>
+          <el-button
+            @click="load"
+            type="primary"
+            icon="el-icon-search"
+            style="margin-left:20px"
+          >查询</el-button>
+          <el-button @click="load" type="primary" icon="fas fa-sync-alt fa-fw">刷新</el-button>
+        </div>
+        <br />
+        <el-table
+          ref="table"
+          :data="projects"
+          v-loading="loading"
+          @current-change="onCurrentChanged"
+          border
+          stripe
+          highlight-current-row
+          readonly
+          size="small"
+        >
+          <el-table-column type="index" :index="getRowIndex" label="序号"></el-table-column>
+          <el-table-column prop="ProjectName" label="项目名称"></el-table-column>
+          <el-table-column prop="LeaderName" label="负责人"></el-table-column>
+          <el-table-column prop="LeaderMobile" label="联系电话" width="200"></el-table-column>
+          <el-table-column prop="TopicName" label="MQ Tag" width="100"></el-table-column>
+          <el-table-column label="操作" width="400" align="center">
+            <el-button @click="onEdit" type="primary" size="small">编辑</el-button>
+            <el-button @click="onDelete" type="primary" size="small">删除</el-button>
+          </el-table-column>
+        </el-table>
+        <br />
+        <!-- 分页组件 -->
+        <el-pagination
+          layout="prev, pager, next, total"
+          :page-size="pageSize"
+          :current-page.sync="page"
+          :total="total"
+          @current-change="load"
+        ></el-pagination>
+        <!-- 对话框 -->
+        <el-dialog title="项目信息" :visible.sync="dlgVisible" width="400px">
+          <project-view :project="curPrj" :visible="dlgVisible"></project-view>
+        </el-dialog>
+      </div>
+    </el-card>
   </div>
 </template>
 
@@ -54,11 +65,13 @@
 import { Component, Prop, Watch, Vue } from "vue-property-decorator";
 import ProjectView from "./ProjectView.vue";
 import ProjectService from "@/services/ProjectService";
+import pageTitleImg from '@/assets/images/pageTitle.png'
 
 @Component({
   components: { ProjectView: ProjectView }
 })
 export default class GmsProjects extends Vue {
+  pageTitleImg :any = pageTitleImg
   loading = false;
   projects = [];
   dlgVisible = false;
@@ -143,3 +156,17 @@ export default class GmsProjects extends Vue {
   }
 }
 </script>
+
+<style scoped>
+
+.page-title {
+  display: flex;
+  align-items: center;
+  color: #606266;
+  font-size: 14px;
+  margin-right: 70px;
+}
+.page-title img {
+  margin-right: 5px;
+}
+</style>

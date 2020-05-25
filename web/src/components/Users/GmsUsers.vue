@@ -1,60 +1,74 @@
 <template>
     <div>
-        <!-- 工具条 -->
-        <div>
-            <el-button @click="onCreate" type="primary" icon="fas fa-plus-circle fa-fw">新增用户</el-button>
-            <!-- <el-button @click="onEdit" type="primary" icon="fas fa-edit fa-fw">编辑</el-button>
-            <el-button @click="onDelete" type="primary" icon="fas fa-minus-circle fa-fw">删除</el-button>
-            <el-button @click="onResetPwd" type="primary" icon="fas fa-sync-alt fa-fw">重置密码</el-button> -->
-            <el-button @click="load" type="primary" icon="fas fa-sync-alt fa-fw">刷新</el-button>
-        </div>
-        <br/>
-        <!-- 表格 -->
-        <el-table ref="table" :data="users" v-loading="loading" size="small" @current-change="onCurrentChanged"
-            border stripe highlight-current-row readonly>
-            <el-table-column type="index" :index="getRowIndex" label="序号"></el-table-column>
-            <el-table-column prop="RealName" label="姓名" width="180"></el-table-column>
-            <el-table-column prop="Username" label="用户名" width="170"></el-table-column>
-            <el-table-column prop="Role" label="角色" :formatter="formatRole" width="70"></el-table-column>
-            <el-table-column label="查看项目">
-                <template slot-scope="scope">
-                    <!-- <el-tag v-for="item in scope.row.ProjectIds" :key="item">
-                        {{ item }}
-                    </el-tag> -->
-                    <el-select disabled v-model="scope.row.ProjectIds" multiple placeholder=" " style="width:100%">
-                        <el-option v-for="item in projects" :key="item.Id"
-                            :label="item.ProjectName" :value="item.Id">
-                        </el-option>
-                    </el-select>
-                </template>
-            </el-table-column>
-            <el-table-column label="操作" width="400" align="center">
-            <el-button @click="onEdit" type="primary" size="small">编辑</el-button>
-            <el-button @click="onDelete" type="primary" size="small">删除</el-button>
-             <el-button @click="onResetPwd" type="primary" size="small">重置密码</el-button>        
-            </el-table-column>
+        
+        <el-card>
+            <div slot="header">
+                <div class="page-title">
+                    <img :src="pageTitleImg" alt="">
+                    <span>用户管理</span>
+                </div>
+            </div>
 
-        </el-table>
-        <!-- 分页 -->
-        <el-pagination layout="prev, pager, next, total"
-            :page-size="pageSize" :current-page.sync="page" :total="total"
-            @current-change="load"></el-pagination>
-        <!-- 对话框 -->
-        <el-dialog title="用户信息" :visible.sync="dlgVisible" width="600px">
-            <user-view :user="curUser" :projects="projects" :visible="dlgVisible"></user-view>
-        </el-dialog>
-        <!--创建用户对话框-->
-        <el-dialog title="重置密码" :visible.sync="dlgResetVisible" width="350px">
-            <span>
-                <label>密码:</label>
-                <el-input v-model="dlgPassword" size="small" type="password">
-                </el-input>
-            </span>
-            <span slot="footer" class="dialog-footer">
-                <el-button type="text" size="small" @click="dlgResetVisible = false">取消</el-button>
-                <el-button type="primary" size="small" @click="doResetPwd">确定</el-button>
-            </span>
-        </el-dialog>
+            <div>
+
+                <!-- 工具条 -->
+                <div>
+                    <el-button @click="onCreate" type="primary" icon="fas fa-plus-circle fa-fw">新增用户</el-button>
+                    <!-- <el-button @click="onEdit" type="primary" icon="fas fa-edit fa-fw">编辑</el-button>
+                    <el-button @click="onDelete" type="primary" icon="fas fa-minus-circle fa-fw">删除</el-button>
+                    <el-button @click="onResetPwd" type="primary" icon="fas fa-sync-alt fa-fw">重置密码</el-button> -->
+                    <el-button @click="load" type="primary" icon="fas fa-sync-alt fa-fw">刷新</el-button>
+                </div>
+                <br/>
+                <!-- 表格 -->
+                <el-table ref="table" :data="users" v-loading="loading" size="small" @current-change="onCurrentChanged"
+                    border stripe highlight-current-row readonly>
+                    <el-table-column type="index" :index="getRowIndex" label="序号"></el-table-column>
+                    <el-table-column prop="RealName" label="姓名" width="180"></el-table-column>
+                    <el-table-column prop="Username" label="用户名" width="170"></el-table-column>
+                    <el-table-column prop="Role" label="角色" :formatter="formatRole" width="70"></el-table-column>
+                    <el-table-column label="查看项目">
+                        <template slot-scope="scope">
+                            <!-- <el-tag v-for="item in scope.row.ProjectIds" :key="item">
+                                {{ item }}
+                            </el-tag> -->
+                            <el-select disabled v-model="scope.row.ProjectIds" multiple placeholder=" " style="width:100%">
+                                <el-option v-for="item in projects" :key="item.Id"
+                                    :label="item.ProjectName" :value="item.Id">
+                                </el-option>
+                            </el-select>
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="操作" width="400" align="center">
+                    <el-button @click="onEdit" type="primary" size="small">编辑</el-button>
+                    <el-button @click="onDelete" type="primary" size="small">删除</el-button>
+                    <el-button @click="onResetPwd" type="primary" size="small">重置密码</el-button>        
+                    </el-table-column>
+
+                </el-table>
+                <!-- 分页 -->
+                <el-pagination layout="prev, pager, next, total"
+                    :page-size="pageSize" :current-page.sync="page" :total="total"
+                    @current-change="load"></el-pagination>
+                <!-- 对话框 -->
+                <el-dialog title="用户信息" :visible.sync="dlgVisible" width="600px">
+                    <user-view :user="curUser" :projects="projects" :visible="dlgVisible"></user-view>
+                </el-dialog>
+                <!--创建用户对话框-->
+                <el-dialog title="重置密码" :visible.sync="dlgResetVisible" width="350px">
+                    <span>
+                        <label>密码:</label>
+                        <el-input v-model="dlgPassword" size="small" type="password">
+                        </el-input>
+                    </span>
+                    <span slot="footer" class="dialog-footer">
+                        <el-button type="text" size="small" @click="dlgResetVisible = false">取消</el-button>
+                        <el-button type="primary" size="small" @click="doResetPwd">确定</el-button>
+                    </span>
+                </el-dialog>
+            </div>
+        </el-card>
+
     </div>
 </template>
 
@@ -63,11 +77,13 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 import ProjectService from "@/services/ProjectService"
 import UserService from "@/services/UserService";
 import UserView from "./UserView.vue";
+import pageTitleImg from '@/assets/images/pageTitle.png'
 
 @Component({
     components: { UserView: UserView }
 })
 export default class GmsUsers extends Vue {
+    pageTitleImg :any = pageTitleImg
     loading = false
     users = [] //用户列表
     projects = [] //项目列表
@@ -170,3 +186,17 @@ export default class GmsUsers extends Vue {
     }
 }
 </script>
+
+<style scoped>
+
+.page-title {
+  display: flex;
+  align-items: center;
+  color: #606266;
+  font-size: 14px;
+  margin-right: 70px;
+}
+.page-title img {
+  margin-right: 5px;
+}
+</style>

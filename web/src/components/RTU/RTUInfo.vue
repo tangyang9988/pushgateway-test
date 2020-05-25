@@ -12,13 +12,19 @@
       <el-col :span="12">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>数采仪历史信息</span>
-            <el-button
-              type="primary"
-              size="small"
-              style="float:right;"
-              @click="getHistoryMessage"
-            >刷新</el-button>
+            <div class="card-header-content">
+              <div class="page-title">
+                <img :src="pageTitleImg" alt="">
+                <span>数采仪历史信息</span>
+              </div>
+
+              <el-button
+                type="primary"
+                size="small"
+                style="float:right;"
+                @click="getHistoryMessage"
+              >刷新</el-button>
+            </div>
           </div>
           <!-- type="card" -->
           <el-tabs v-model="activeName" @tab-click="handleClick" size="small">
@@ -70,14 +76,21 @@
 
       <el-col :span="12">
         <el-card class="box-card">
+          
           <div slot="header" class="clearfix">
-            <span>数采仪实时数据</span>
-            <el-button
-              type="primary"
-              size="small"
-              style="float:right;"
-              @click="changeCurrentData"
-            >刷新</el-button>
+            <div class="card-header-content">
+              <div class="page-title">
+                <img :src="pageTitleImg" alt="">
+                <span>数采仪实时数据</span>
+              </div>
+
+              <el-button
+                type="primary"
+                size="small"
+                style="float:right;"
+                @click="changeCurrentData"
+              >刷新</el-button>
+            </div>
           </div>
           <el-tabs v-model="currentActiveName" @tab-click="changeCurrentData">
             <el-tab-pane label="实时消息" name="currentMessage">
@@ -135,6 +148,7 @@ import { Component, Vue, Watch } from "vue-property-decorator";
 import HeaderCardList from "./HeaderCardList.vue";
 import MNModify from "./MNModify.vue";
 import DtuService from "@/services/DtuService";
+import pageTitleImg from '@/assets/images/pageTitle.png'
 
 @Component({
   components: {
@@ -142,6 +156,7 @@ import DtuService from "@/services/DtuService";
   }
 })
 export default class rtu extends Vue {
+  pageTitleImg :any = pageTitleImg
   currentProject = {};
 
   activeName = "5";
@@ -316,6 +331,21 @@ export default class rtu extends Vue {
 .box-card {
   height: 480px;
   width: 100%;
+}
+
+.card-header-content {
+  display: flex;
+  justify-content: space-between;
+}
+.page-title {
+  display: flex;
+  align-items: center;
+  color: #606266;
+  font-size: 14px;
+  margin-right: 70px;
+}
+.page-title img {
+  margin-right: 5px;
 }
 </style>
 
