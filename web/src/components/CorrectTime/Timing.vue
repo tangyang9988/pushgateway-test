@@ -3,11 +3,9 @@
     <header-card-list></header-card-list>
     <el-card class="card">
       
-      <div slot="header">
-          <div class="page-title">
-              <img src="@/assets/images/pageTitle.png" alt="">
-              <span>校时</span>
-          </div>
+      <div class="page-title">
+        <img src="@/assets/images/pageTitle.png" alt="">
+        <span>校时</span>
       </div>
       
       <div class="dlgRecriminateControl-form">

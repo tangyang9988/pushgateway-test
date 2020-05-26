@@ -3,11 +3,9 @@
     <header-card-list></header-card-list>
     <el-card>
       
-      <div slot="header">
-          <div class="page-title">
-              <img src="@/assets/images/pageTitle.png" alt="">
-              <span>反控设置</span>
-          </div>
+      <div class="page-title">
+        <img src="@/assets/images/pageTitle.png" alt="">
+        <span>反控设置</span>
       </div>
       <div class="dlgRecriminateControl-form">
         <el-form ref="form" :model="form" :rules="formRules" label-width="80px" size="small">
