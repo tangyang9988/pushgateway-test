@@ -213,14 +213,24 @@ export default class CardList extends Vue {
       <any>this.RtuMn,
       <any>this.RtuName
     ).then(res => {
+      // 重置卡片选中状态
+      this.isSelect = false;
+      this.activeCard = null;
+      this.curCard = null;
+      // 重置懒加载
+      this.finished = false 
+      this.index = 0
+      // 重置滚动条
+      let cardsDom = document.getElementById("cards-box");
+      if (cardsDom) cardsDom.scrollTop = 0;
       this.$set(this, "devices", res.data);
-      this.loading = false
+      this.cardList = []
       if (this.devices == undefined || this.devices.length <= 0) {
         this.$message.warning("暂无数据");
       }else {
-        this.cardList = []
         this.load() 
       }
+      this.loading = false
     }).catch(err => {
       this.loading = false;
       this.$message.error("加载数采仪列表失败:" + err);
@@ -280,19 +290,11 @@ export default class CardList extends Vue {
 
   // 刷新
   flash() {
-    this.isSelect = false;
-    this.RtuName = null;
-    this.RtuMn = null;
+    // 重置查询条件
     this.proId = null;
     this.online = null;
-    this.activeCard = null;
-    this.curCard = null;
-    // 重置懒加载
-    this.finished = false 
-    this.index = 0
-    // 重置滚动条
-    let cardsDom = document.getElementById("cards-box");
-    if (cardsDom) cardsDom.scrollTop = 0;
+    this.RtuName = null;
+    this.RtuMn = null;
 
     this.loadDTUs()
     this.loadOnline()
