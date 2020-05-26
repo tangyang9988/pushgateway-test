@@ -98,21 +98,21 @@ export default class HeaderCardList extends Vue {
 
   //如果project发生变化，即刷新了页面，就从本地获取mn，并开启websocket
   @Watch("project", { immediate: true, deep: true })
-  onPersonChanged3(newVal: project, oldVal: project) {
+  onPersonChanged3(newVal: any, oldVal: any) {
     this.MNStr = sessionStorage.getItem("rtuMN");
     this.projectName = sessionStorage.getItem("projectName");
     this.uuid = sessionStorage.getItem("uuid");
     this.initWebSocket();
   }
  
-  projectName = ""; //项目名称
-  MNStr = ""; //MN
+  projectName:any = ""; //项目名称
+  MNStr:any = ""; //MN
   showHeader = false;
   mnList = false;
-  ws = "";
+  ws:any = "";
   msg = "";
 
-  uuid = "";
+  uuid:any = "";
 
   // that: any = this;
   tableData:any = [];
@@ -174,7 +174,7 @@ export default class HeaderCardList extends Vue {
     // this.ws.send({rtuMN:})
   }
 
-  initWebSocket = function(params: any) {
+  initWebSocket() {
     // ws = new WebSocket('wss://echo.websocket.org/')
     this.ws = new WebSocket(
       "ws://172.20.0.91:9001/api/remoteControl/ws/execInfo?uuid=" + this.uuid
@@ -199,12 +199,11 @@ export default class HeaderCardList extends Vue {
       sessionStorage.setItem('caArr', JSON.stringify(that.tableData))
       
     };
-    this.ws.onclose = function(e) {
+    this.ws.onclose = function() {
       console.log("WebSocket关闭: ");
     };
-    this.ws.onerror = function(e) {
+    this.ws.onerror = function() {
       console.log("WebSocket发生错误: ");
-      console.log(e);
     };
   };
 

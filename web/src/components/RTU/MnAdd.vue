@@ -230,8 +230,9 @@ export default class MNAdd extends Vue {
       );
     } else {
       console.log("当前是添加页,清空之前内容！");
-       this.cleanInfo();
-       this.$refs['MNForm'].resetFields();
+      this.cleanInfo();
+      const ref: any = this.$refs['MNForm']
+      ref.resetFields()
     }
     //无论添加还是修改都要初始化因子表单
     this.initFactorForm()
@@ -243,8 +244,8 @@ export default class MNAdd extends Vue {
   labelPosition = "right";
   mnHide = false;
 
-  STList = [];
-  uploadStList = [];
+  STList:any = [];
+  uploadStList:any = [];
   factorCodes = [];
   factorMap = new Map();
   factorOptions = [];
@@ -260,8 +261,8 @@ export default class MNAdd extends Vue {
     heartInterval: 10,
     isHeart: 1
   };
-  factorTableData = [];
-  factorForm = {
+  factorTableData:any = [];
+  factorForm:any = {
     factorSt: "",
     uploadSt: "",
     factorCode: "",
@@ -372,7 +373,9 @@ export default class MNAdd extends Vue {
     console.log("进行Mnform校验……")
     let validateRes = false;
     //表单验证
-    this.$refs[formName].validate((result:any, errorFields:any) => {
+    
+    const ref: any = this.$refs[formName]
+    ref.validate((result:any, errorFields:any) => {
       if (result) {
         validateRes = true;
       } else {
@@ -509,7 +512,8 @@ export default class MNAdd extends Vue {
   saveToFactorTable(formName: string, isModifyFactor: boolean) {
     let validateRes = false;
     //表单验证
-    this.$refs[formName].validate((result, errorFields) => {
+    const ref: any = this.$refs[formName]
+    ref.validate((result:any, errorFields:any) => {
       if (result) {
         validateRes = true;
       } else {
@@ -543,7 +547,8 @@ export default class MNAdd extends Vue {
     console.log("is modify then:", this.isModify);
   }
   resetFactorForm(formName: string) {
-    this.$refs[formName].resetFields();
+    const ref: any = this.$refs[formName]
+    ref.resetFields();
   }
   //删除表格中的一行
   deleteRow(rowIndex: any, rowData: any) {

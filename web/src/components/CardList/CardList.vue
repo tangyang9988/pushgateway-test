@@ -261,7 +261,7 @@ export default class CardList extends Vue {
   }
   // 国际法则自动生成uuid
   getUuid() {
-    var s = [];
+    var s:any = [];
     var hexDigits = "0123456789abcdef";
     for (var i = 0; i < 36; i++) {
       s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);

@@ -64,7 +64,7 @@ import HeaderCardList from "../RTU/HeaderCardList.vue";
   }
 })
 export default class DynamicControlCard extends Vue {
-  RTDynamic = { id: 0, k: 0, b: 0 }; // 用于存储实时动态管控参数
+  RTDynamic:any = { id: 0, k: 0, b: 0 }; // 用于存储实时动态管控参数
 
   /** 当前设备 */
   @Prop({ default: null })dtu!: any;
@@ -94,7 +94,6 @@ export default class DynamicControlCard extends Vue {
     this.load();
   }
 
- 
   dynamicData = []
   dynamicMessages=[]
   range = 2000; //时间范围
@@ -112,9 +111,9 @@ export default class DynamicControlCard extends Vue {
     let _factorCode = `${row.factorCode}-${row.factorId}`
     let results:Array<any> = []
     this.dynamicMessages.forEach((item, index) => {
-      if(item.factorCode == _factorCode) {
-        item.data.forEach((el:object, key:number) => {
-          results.push([el.collectTime, el.value])
+      if((item as any).factorCode == _factorCode) {
+        (item as any).data.forEach((el:object, key:number) => {
+          results.push([(el as any).collectTime, (el as any).value])
         })
       }
     })
@@ -143,7 +142,7 @@ export default class DynamicControlCard extends Vue {
         let results:any = []; // 定义result
 
         if(this.dynamicMessages.length) { // 如果dynamicMessages数组长度不为0
-          this.dynamicMessages[0].data.forEach((item:any, index:any) => { // 遍历data
+          (this as any).dynamicMessages[0].data.forEach((item:any, index:any) => { // 遍历data
             results.push([item.collectTime, item.value])  // 向results数组内添加数据
           })
         }
@@ -175,13 +174,13 @@ export default class DynamicControlCard extends Vue {
         
         if (this.dynamicData != null) {
           this.dynamicData.forEach((item, index) => {
-            if(Number(item.factorId) == factorId) {
-              if (item.factorCode == "i13007") {
-                item.factorName = '斜率'
-                this.RTDynamic.k = Number(item.value).toFixed(1);
+            if(Number((item as any).factorId) == factorId) {
+              if ((item as any).factorCode == "i13007") {
+                (this as any).RTDynamic.k = Number((item as any).value).toFixed(1);
+                (item as any).factorName = '斜率'
               } else {
-                this.RTDynamic.b = Number(item.value).toFixed(1);
-                item.factorName = '截距'
+                (this as any).RTDynamic.b = Number((item as any).value).toFixed(1);
+                (item as any).factorName = '截距'
               }
             }
           })

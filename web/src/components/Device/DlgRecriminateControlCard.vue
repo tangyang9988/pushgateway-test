@@ -296,7 +296,8 @@ export default class DynamicControlCard extends Vue {
   }
   // 取消
   clear(){
-     this.$refs['form'].resetFields();
+    const ref:any = this.$refs['form']
+    ref.resetFields();
   }
   mounted() {}
 

@@ -157,7 +157,7 @@ import DtuService from "@/services/DtuService";
 })
 export default class rtu extends Vue {
  
-  currentProject = {};
+  currentProject:any = {};
 
   activeName = "5";
   currentActiveName = "currentMessage";
@@ -188,8 +188,8 @@ export default class rtu extends Vue {
   mounted() {
     console.log("rtu info ,mounted,set sessionStorage rtuMN,projectName.",this.$route.query.rtuMn,this.$route.query.projectName)
     this.currentProject.rtuMn = this.$route.query.rtuMn;
-    sessionStorage.setItem("rtuMN", this.$route.query.rtuMn);
-   sessionStorage.setItem("projectName",this.$route.query.projectName)
+    sessionStorage.setItem("rtuMN", String(this.$route.query.rtuMn));
+   sessionStorage.setItem("projectName", String(this.$route.query.projectName))
    console.log("将rtu mn 和项目名称存入sessionStorage:",sessionStorage.getItem("rtuMN"),sessionStorage.getItem("projectName"))
     this.load();
   }

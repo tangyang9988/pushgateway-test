@@ -119,7 +119,6 @@ import FileSaver from "file-saver";
   }
 })
 export default class mnlist extends Vue {
- 
   mnaddvisable = false;
   resendData = false;
   mnmodifyVisable = false;
@@ -128,8 +127,8 @@ export default class mnlist extends Vue {
   curDTU: any = null;
   loading = true;
   mnFactor = []; //mn修改页的因子表格
-  mnobj = {}; //mn修改页的mn信息
-  currentTableData = [];
+  mnobj:any = {}; //mn修改页的mn信息
+  currentTableData:any = [];
   mnAddTitle = "新增上位机配置";
   uuid =""
 
@@ -162,13 +161,14 @@ export default class mnlist extends Vue {
   }
   /** 导入 */
   importJSON() {
-    const file = document.getElementById("file").files[0];
+    let fileDom = document.getElementById("file")
+    const file = fileDom?fileDom.files[0]:null
     const reader = new FileReader();
     reader.readAsText(file);
     const _this = this;
     reader.onload = function() {
       // this.result为读取到的json字符串，需转成json对象
-      _this.currentTableData = JSON.parse(this.result);
+      _this.currentTableData = JSON.parse(<any>this.result);
       // 检测是否导入成功
       console.log(_this.currentTableData);
     };

@@ -54,7 +54,8 @@ export default class CardView extends Vue {
   @Watch("dtu")
     isAddChange(newVal: boolean, oldVal: boolean) {
       // 如果isClear变化，重置表单验证
-      this.$refs['form'].clearValidate()
+      let ref:any = this.$refs['form']
+      ref.clearValidate()
     }
 
   formRule:object = {
@@ -80,8 +81,9 @@ export default class CardView extends Vue {
   }
   // 保存
   save() {
+    let ref:any = this.$refs['form']
     if (!this.isAdd) {
-      this.$refs['form'].validate((valid:boolean) => {
+      ref.validate((valid:boolean) => {
         if (valid) {
           DtuService.Modify(
             this.dtu
@@ -96,7 +98,7 @@ export default class CardView extends Vue {
         }
       })
     } else {
-      this.$refs['form'].validate((valid:boolean) => {
+      ref.validate((valid:boolean) => {
         if (valid) {
           DtuService.Add(
             this.dtu

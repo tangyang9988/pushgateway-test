@@ -63,21 +63,21 @@ import { Component, Vue } from "vue-property-decorator";
 import HeaderCardList from "../RTU/HeaderCardList.vue";
 import CollectingDevView from "./CollectingDevView.vue";
 import CollectService from "@/services/CollectService";
-import FileSaver from "file-saver";
+var FileSaver = require('file-saver');
  
 
 @Component({
   components: {
     HeaderCardList: HeaderCardList,
     CollectingDevView: CollectingDevView,
-    FileSaver: FileSaver
+    // FileSaver: FileSaver
   }
 })
 export default class Collecting extends Vue {
  
   collectingAddVisable = false;
   loading = false;
-  rtuDevices = [];
+  rtuDevices:any = [];
   rtuMN = "";
   st = "";
   cp = "";
@@ -225,13 +225,14 @@ export default class Collecting extends Vue {
   }
   /** 导入 */
   importJSON() {
-    const file = document.getElementById("file").files[0];
+    let fileDom = document.getElementById("file")
+    let file = (fileDom as any).files[0]
     const reader = new FileReader();
     reader.readAsText(file);
     const _this = this;
     reader.onload = function() {
       // this.result为读取到的json字符串，需转成json对象
-      _this.rtuDevices = JSON.parse(this.result);
+      _this.rtuDevices = JSON.parse((this as any).result);
       // 检测是否导入成功
       console.log(_this.rtuDevices);
     };

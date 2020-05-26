@@ -544,7 +544,7 @@ export default class CollectingDevView extends Vue {
   parameters = [];
   parameterFactors:any[] = [];
   stList:any[] = [];
-  factorList = [];
+  factorList:any = [];
   isLineClick = false;
   currRowIndex = -1; //父组件点击的行
   intervalUnit = "秒"; // 采集间隔单位
@@ -1048,9 +1048,9 @@ export default class CollectingDevView extends Vue {
       .then(res => {
         this.$set(this, "parameters", res.data);
         //TODO
-        this.deviceProtocols = this.parameters.deviceProtocol;
-        this.parameterFactors = this.parameters.factor;
-        this.stList = this.parameters.st;
+        this.deviceProtocols = (this as any).parameters.deviceProtocol;
+        this.parameterFactors = (this as any).parameters.factor;
+        this.stList = (this as any).parameters.st;
       })
       .catch(err => {
         this.$message.error("加载通讯协议败:" + err);
@@ -1095,7 +1095,7 @@ export default class CollectingDevView extends Vue {
   onEdit() {
     if (this.dtu) {
       // this.collectingAddVisable = true;
-      this.factorList.push(this.dtu.factors);
+      this.factorList.push(this.dtu.factors)
     } else {
       this.$message.warning("请先选择因子");
     }
@@ -1113,7 +1113,8 @@ export default class CollectingDevView extends Vue {
   collectAdd() {
     let validateRes = false;
     //表单验证
-    this.$refs[this.showForm?'formHeader':'formHeader2'].validate((result:any, errorFields:any) => {
+    let ref:any = this.$refs[this.showForm?'formHeader':'formHeader2']
+    ref.validate((result:any, errorFields:any) => {
       if (result) {
         validateRes = true;
       } else {
@@ -1186,7 +1187,8 @@ export default class CollectingDevView extends Vue {
   factorsAdd(formName: string) {
     let validateRes = false;
     //表单验证
-    this.$refs[formName].validate((result, errorFields) => {
+    let ref:any = this.$refs[formName]
+    ref.validate((result:any, errorFields:any) => {
       if (result) {
         validateRes = true;
       } else {
@@ -1212,7 +1214,8 @@ export default class CollectingDevView extends Vue {
   }
   /** 重置表单 */
   resetFactorForm(formName: string) {
-    this.$refs[formName].resetFields();
+    let ref:any = this.$refs[formName]
+    ref.resetFields();
   }
   /** 初始化表单 */
   initFormHeader() {
@@ -1269,9 +1272,12 @@ export default class CollectingDevView extends Vue {
     await this.initFormTail();
     this.factorList = [];
     
-    this.$refs['formTail'].clearValidate()
-    this.$refs['formHeader'].clearValidate()
-    this.$refs['formHeader2'].clearValidate()
+    let formTail:any = this.$refs['formTail']
+    formTail.clearValidate()
+    let formHeader:any = this.$refs['formHeader']
+    formHeader.clearValidate()
+    let formHeader2:any = this.$refs['formHeader2']
+    formHeader2.clearValidate()
   }
 }
 </script>

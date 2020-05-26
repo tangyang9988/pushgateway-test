@@ -56,7 +56,7 @@ export default class Timing extends Vue {
       .then(res => {
         this.$set(this, "parameters", res.data);
         //TODO
-        this.currentTime = this.parameters.systemTime;
+        this.currentTime = (this as any).parameters.systemTime;
       })
       .catch(err => {
         this.$message.error("加载议败:" + err);

@@ -110,10 +110,12 @@ export default class BaseSetting2 extends Vue {
   }
 
   resetForm() {
-    this.$refs['form'].resetFields()
+    const ref:any = this.$refs['form']
+    ref.resetFields()
   }
   onSubmit() {
-    this.$refs['form'].validate((valid:boolean) => {
+    const ref:any = this.$refs['form']
+    ref.validate((valid:boolean) => {
       if (valid) {
         // alert('验证通过')
         

@@ -367,7 +367,8 @@ export default class ComDebug extends Vue {
    * 提交表单
    */
   onSubmit() {
-    this.$refs['form'].validate((valid:any) => {
+    const ref:any = this.$refs['form']
+    ref.validate((valid:any) => {
       if (valid) {
         ComDebugService.ComDebugSubmit(
           sessionStorage.getItem('rtuMN') || '',
@@ -398,7 +399,8 @@ export default class ComDebug extends Vue {
    * 重置表单项以及验证
    */
   resetForm() {
-    this.$refs['form'].resetFields()
+    const ref:any = this.$refs['form']
+    ref.resetFields()
     this.formData = {
       com: this.comOption[0].label,
       baudrate: this.baudrateOption[0].label,

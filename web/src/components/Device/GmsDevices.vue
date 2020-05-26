@@ -174,12 +174,12 @@ import RTUInfo from "../RTU/RTUInfo.vue";
 })
 export default class GmsDevices extends Vue {
  
-  loading = false;
-  devices = []; //设备列表
-  pageSize = 10;
-  page = 1;
-  total = 0;
-  proId = "";
+  loading = false
+  devices = []  //设备列表
+  pageSize = 10
+  page = 1
+  total = 0
+  proId:any = ""
 
   curDTU: any = null; //当前选择的设备
   dlgCollectSettingsVisible = false; //采集配置  对话框是否打开
@@ -209,18 +209,24 @@ export default class GmsDevices extends Vue {
   /** 加载数采仪列表 **/
   loadDTUs() {
     this.loading = true;
-    DtuService.Query(this.pageSize, this.page)
-      .then(res => {
-        this.total = res.total; // 总设备数？
-        console.log(this.devices);
-        this.$set(this, "devices", res.data);
-        // this.getStates();
-        this.loading = false;
-      })
-      .catch(err => {
-        this.loading = false;
-        this.$message.error("加载数采仪列表失败:" + err);
-      });
+    DtuService.Query(
+      
+      this.pageSize, 
+      this.page, 
+      this.proId, 
+      3,
+      '', 
+      '',
+    ).then((res:any) => {
+      this.total = res.total; // 总设备数？
+      console.log(this.devices);
+      this.$set(this, "devices", res.data);
+      // this.getStates();
+      this.loading = false;
+    }).catch((err:any) => {
+      this.loading = false;
+      this.$message.error("加载数采仪列表失败:" + err);
+    });
     this.loadProjects();
   }
   /** 根据项目筛选数采仪列表 **/
