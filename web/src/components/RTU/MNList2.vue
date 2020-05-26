@@ -45,9 +45,9 @@
         <el-table-column prop="name" label min-width="240">
           <template slot-scope="scope">
             <div style="display:flex;justify-content:center;">
-              <el-button type="primary" size="mini" @click="openModify(scope.row,scope.$index)">编辑</el-button>
-              <el-button type="danger" size="mini" @click="delMn(scope.$index)">删除</el-button>
-              <el-button type="primary" size="mini" @click="onShowResendData">补发数据</el-button>
+              <el-link type="primary" icon="el-icon-edit-outline" @click="openModify(scope.row,scope.$index)">编辑</el-link>
+              <el-link style="margin-left:15px;" type="danger" icon="el-icon-delete" @click="delMn(scope.$index)">删除</el-link>
+              <el-link style="margin-left:15px;" type="warning" icon="el-icon-upload2" @click="onShowResendData">补发数据</el-link>
             </div>
           </template>
         </el-table-column>
