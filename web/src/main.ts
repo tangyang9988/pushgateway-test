@@ -5,7 +5,7 @@ import router from './router'
 // import ElementUI from 'element-ui' //element-ui的全部组件
 // import 'element-ui/lib/theme-chalk/index.css'//element-ui的css
 
-import { Message, Loading, Card, Button, Input, InputNumber, Select, Option, Container, Header, Aside, Main, Menu, MenuItem, Avatar, Dropdown, DropdownItem, DropdownMenu } from 'element-ui'
+import { Message, Loading, Card, Button, Input, InputNumber, Select, Option, Container, Header, Aside, Main, Menu, MenuItem, Avatar, Dropdown, DropdownItem, DropdownMenu, Tooltip } from 'element-ui'
 import { Row, Col, Table, TableColumn, Dialog, DatePicker, Pagination, Tag, Radio, Form, FormItem, ButtonGroup, MessageBox, Divider, Checkbox,CheckboxGroup,CheckboxButton,Tabs,TabPane,RadioGroup,Breadcrumb,BreadcrumbItem } from 'element-ui'
 import * as filters from "./utils/time"; //过滤器
 //动态管控图
@@ -53,6 +53,7 @@ Vue.use(Avatar)
 Vue.use(Dropdown)
 Vue.use(DropdownItem)
 Vue.use(DropdownMenu)
+Vue.use(Tooltip)
 Vue.use(Tabs)
 Vue.use(TabPane)
 Vue.use(RadioGroup)

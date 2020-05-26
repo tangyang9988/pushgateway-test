@@ -16,13 +16,11 @@
 
     <el-row :gutter="20">
       <el-col :span="12" class="toolsHeight">
-        <el-card :body-style="{ padding: '0px' }" class="cardHeight">
+        <el-card class="cardHeight">
 
-          <div slot="header">
-            <div class="page-title">
-              <img src="@/assets/images/pageTitle.png" alt="">
-              <span>工具栏</span>
-            </div>
+          <div class="page-title">
+            <img src="@/assets/images/pageTitle.png" alt="">
+            <span>工具栏</span>
           </div>
 
           <div class="tools-content">
@@ -31,37 +29,41 @@
                 <el-button type="primary" class="toolsButtonWidth" size="small" @click="openBasicSetting">基础设置</el-button>
                 <el-button type="primary" class="toolsButtonWidth" size="small" @click="openMNList">上位机设置</el-button>
                 <el-button type="primary" class="toolsButtonWidth" size="small" @click="openCollecting">采集设备配置</el-button>
+                <el-button size="small" type="primary" class="toolsButtonWidth" @click="openTiming">校时</el-button>
             </div>
 
             <div class="toolBtn-wrapper">
-                <el-button size="small" type="primary" class="toolsButtonWidth" @click="openTiming">校时</el-button>
                 <el-button size="small" type="primary" class="toolsButtonWidth" @click="onShowDlgRecriminateControl">反控设置</el-button>
                 <el-button size="small" class="toolsButtonWidth" plain>屏幕截图</el-button>
                 <el-button size="small" class="toolsButtonWidth" plain>重启数采仪</el-button>
+                <el-button type="primary" size="small" class="toolsButtonWidth" @click="openComDebug">串口调试</el-button>
+                <div style="width:110px"><!-- 第五格··占个坑 --></div>
             </div>
 
-            <div class="toolBtn-wrapper">
-                <el-button type="primary" size="small" class="toolsButtonWidth" @click="openComDebug">串口调试</el-button>
-                <div><!-- flex布局--占个坑··· --></div>
-                <div><!-- flex布局--占个坑··· --></div>
-                <div><!-- flex布局--占个坑··· --></div>
-            </div>
           </div>
         </el-card>
       </el-col>
 
       <el-col :span="12" class="toolsHeight">
-        <el-card :body-style="{ padding: '0px' }" class="cardHeight">
+        <el-card class="cardHeight">
           
-          <div slot="header">
-            <div class="page-title">
-              <img src="@/assets/images/pageTitle.png" alt="">
-              <span>系统执行信息</span>
-            </div>
+          <div class="page-title">
+            <img src="@/assets/images/pageTitle.png" alt="">
+            <span>系统执行信息</span>
           </div>
 
-          <el-tabs>
-            <el-table
+          <div class="systemInfo-wrapper">
+            <el-row 
+              class="systemInfo-cell"
+              v-for="(item, index) in tableData"
+              :key="index"
+            >
+              <el-col :span="6">{{item.execTime}}</el-col>
+              <el-col :span="15">{{item.commandName}}</el-col>
+              <el-col :span="3">{{item.execResult}}</el-col>
+            </el-row>
+          </div>
+            <!-- <el-table
               :data="tableData"
               height="150"
               style="width: 100%"
@@ -72,8 +74,7 @@
               <el-table-column prop="execTime" width="180" label></el-table-column>
               <el-table-column prop="commandName" label></el-table-column>
               <el-table-column prop="execResult" label></el-table-column>
-            </el-table>
-          </el-tabs>
+            </el-table> -->
         </el-card>
       </el-col>
     </el-row>
@@ -215,49 +216,9 @@ export default class HeaderCardList extends Vue {
  
 
 <style scoped>
-/* .tools {
-  width: 40%;
-  margin-left: 5%;
-  float: left;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
-} */
-.currentData {
-  width: 30%;
-  height: 15%;
-  margin-right: 5%;
-  float: right;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
-}
 .tabHeader {
   height: 15%;
   width: 100%;
-}
-
-.text {
-  font-size: 14px;
-}
-
-.item {
-  padding: 18px 0;
-}
-
-.box-card {
-  width: 650px;
-}
-
-.row-bg {
-  padding: 10px 0;
-}
-.toolsButtonWidth {
-  width: 100px;
-}
-.toolsHeight {
-  height: 250px;
-}
-
-.cardHeight {
-  height: 240px;
-  /* height: 9%; */
 }
 .proInfo {
   display: flex;
@@ -273,21 +234,36 @@ export default class HeaderCardList extends Vue {
 .page-title img {
   margin-right: 5px;
 }
-.bread {
-  width: 100%;
-  margin-bottom: 20px;
+.cardHeight {
+  height: 240px;
 }
-
 /* 工具栏 */
 .tools-content {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 20px;
+  margin-top: 20px;
+}
+.toolsButtonWidth {
+  width: 100px;
+}
+.toolsHeight {
+  height: 250px;
 }
 .toolBtn-wrapper {
   display: flex;
   justify-content: space-between;
-  margin: 8px 0;
+  margin: 20px 0;
+}
+/* 系统执行信息 */
+.systemInfo-wrapper {
+  height: 160px;
+  margin-top: 20px;
+  overflow: auto;
+}
+.systemInfo-cell {
+  font-size: 14px;
+  line-height: 22px;
+  color: rgb(80, 80, 80);
 }
 </style>

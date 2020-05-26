@@ -8,30 +8,38 @@
     <br />
 
     <!-- 数采仪发送的消息 -->
-    <el-row :gutter="40">
+    <el-row :gutter="20">
       <el-col :span="12">
         <el-card class="box-card">
-          <div slot="header" class="clearfix">
-            <div class="card-header-content">
-              <div class="page-title">
-                <img src="@/assets/images/pageTitle.png" alt="">
-                <span>数采仪历史信息</span>
-              </div>
-
-              <el-button
-                type="primary"
-                size="small"
-                style="float:right;"
-                @click="getHistoryMessage"
-              >刷新</el-button>
+          <div class="card-header-content">
+            <div class="page-title">
+              <img src="@/assets/images/pageTitle.png" alt="">
+              <span>数采仪历史信息</span>
             </div>
+
+            <el-button
+              type="primary"
+              size="small"
+              style="float:right;"
+              @click="getHistoryMessage"
+            >刷新</el-button>
           </div>
           <!-- type="card" -->
           <el-tabs v-model="activeName" @tab-click="handleClick" size="small">
             <el-tab-pane label="5分钟消息" name="5">
-              <el-table :data="messages" style="width: 100%" max-height="300">
+              <el-table :data="messages" style="width: 100%" max-height="320" :cell-style="{padding:'5px 0'}">
                 <el-table-column prop="InsertTime" label="日期" width="150"></el-table-column>
-                <el-table-column prop="Msg" label="结果"></el-table-column>
+                <el-table-column prop="Msg" label="结果">
+                  <template slot-scope="scope">
+                    <el-tooltip placement="top">
+                      <div slot="content" style="width:700px;font-size:12px;">
+                        {{ scope.row.Msg }}
+                      </div>
+
+                      <div class="font-hide">{{ scope.row.Msg }}</div>
+                    </el-tooltip>
+                  </template>
+                </el-table-column>
               </el-table>
               <!-- 分页 -->
               <el-pagination
@@ -44,9 +52,19 @@
             </el-tab-pane>
             <el-tab-pane label="1小时消息" name="60">
               <!-- <el-button plain>刷新</el-button> -->
-              <el-table :data="messages" style="width: 100%" max-height="300">
+              <el-table :data="messages" style="width: 100%" max-height="300" :cell-style="{padding:'5px 0'}">
                 <el-table-column prop="InsertTime" label="日期" width="150"></el-table-column>
-                <el-table-column prop="Msg" label="结果"></el-table-column>
+                <el-table-column prop="Msg" label="结果">
+                  <template slot-scope="scope">
+                    <el-tooltip placement="top">
+                      <div slot="content" style="width:700px;font-size:12px;">
+                        {{ scope.row.Msg }}
+                      </div>
+
+                      <div class="font-hide">{{ scope.row.Msg }}</div>
+                    </el-tooltip>
+                  </template>
+                </el-table-column>
               </el-table>
               <el-pagination
                 layout="prev, pager, next, total"
@@ -58,9 +76,19 @@
             </el-tab-pane>
             <el-tab-pane label="30天消息" name="43200">
               <!-- <el-button plain>刷新</el-button> -->
-              <el-table :data="messages" style="width: 100%" max-height="300">
+              <el-table :data="messages" style="width: 100%" max-height="300" :cell-style="{padding:'5px 0'}">
                 <el-table-column prop="InsertTime" label="日期" width="150"></el-table-column>
-                <el-table-column prop="Msg" label="结果"></el-table-column>
+                <el-table-column prop="Msg" label="结果">
+                  <template slot-scope="scope">
+                    <el-tooltip placement="top">
+                      <div slot="content" style="width:700px;font-size:12px;">
+                        {{ scope.row.Msg }}
+                      </div>
+
+                      <div class="font-hide">{{ scope.row.Msg }}</div>
+                    </el-tooltip>
+                  </template>
+                </el-table-column>
               </el-table>
               <el-pagination
                 layout="prev, pager, next, total"
@@ -76,25 +104,23 @@
 
       <el-col :span="12">
         <el-card class="box-card">
-          
-          <div slot="header" class="clearfix">
-            <div class="card-header-content">
-              <div class="page-title">
-                <img src="@/assets/images/pageTitle.png" alt="">
-                <span>数采仪实时数据</span>
-              </div>
-
-              <el-button
-                type="primary"
-                size="small"
-                style="float:right;"
-                @click="changeCurrentData"
-              >刷新</el-button>
+          <div class="card-header-content">
+            <div class="page-title">
+              <img src="@/assets/images/pageTitle.png" alt="">
+              <span>数采仪实时数据</span>
             </div>
+
+            <el-button
+              type="primary"
+              size="small"
+              style="float:right;"
+              @click="changeCurrentData"
+            >刷新</el-button>
           </div>
+          
           <el-tabs v-model="currentActiveName" @tab-click="changeCurrentData">
             <el-tab-pane label="实时消息" name="currentMessage">
-              <el-table :data="currentTableData" style="width: 100%" max-height="450">
+              <el-table :data="currentTableData" style="width: 100%" max-height="350">
                 <el-table-column prop="date" label="日期"></el-table-column>
                 <el-table-column prop="code" label="操作"></el-table-column>
                 <el-table-column prop="flag" label="结果">
@@ -104,7 +130,7 @@
               </el-table>
             </el-tab-pane>
             <el-tab-pane label="TCP通道日志" name="tcpLog">
-              <el-table :data="tcpLog" style="width: 100%" max-height="450">
+              <el-table :data="tcpLog" style="width: 100%" max-height="350">
                 <el-table-column prop="insert_time" label="日期">
                   <!-- {{"2000-01-10T02:09:43Z" | formatDate}}  {{InsertTime}}-->
                   <!-- <div>{{tcpLog.InsertTime}} </div> -->
@@ -127,7 +153,7 @@
             <!-- </el-table>
             </el-tab-pane>-->
             <el-tab-pane label="统计日志" name="statisticsLog">
-              <el-table :data="staLog" style="width: 100%" max-height="450">
+              <el-table :data="staLog" style="width: 100%" max-height="350">
                 <el-table-column prop="insert_time" label="日期"></el-table-column>
                 <el-table-column prop="content" label="操作"></el-table-column>
                 <!-- <el-table-column prop="flag" label="结果">
@@ -346,6 +372,11 @@ export default class rtu extends Vue {
 }
 .page-title img {
   margin-right: 5px;
+}
+.font-hide {
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
 }
 </style>
 
