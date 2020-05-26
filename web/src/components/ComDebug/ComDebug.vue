@@ -3,124 +3,132 @@
     <header-card-list></header-card-list>
     <el-card style="margin-top:18px;">
       
-      <div slot="header">
-        <div class="page-title">
-          <img src="@/assets/images/pageTitle.png" alt="">
-          <span>串口调试</span>
-        </div>
+      <div class="page-title">
+        <img src="@/assets/images/pageTitle.png" alt="">
+        <span>串口调试</span>
       </div>
 
-      <el-form
-        :rules="formRule"
-        ref="form"
-        :model="formData"
-        size="mini"
-      >
-        <div class="form-item-wrapper">
-          <div style="white-space:nowrap;margin-right:80px;">
-            <el-form-item label="com口:" prop="com">
-              <el-select v-model="formData.com" placeholder="请选择" style="width:90px" >
-                <el-option
-                  v-for="item in comOption"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.label"
-                ></el-option>
-              </el-select>
-            </el-form-item>
+      <div class="ComDebug-content">
+
+        <el-form
+          :rules="formRule"
+          ref="form"
+          :model="formData"
+          size="mini"
+        >
+          <!-- 表单第一行 -->
+          <div class="form-item-wrapper">
+            <div style="white-space:nowrap;">
+              <el-form-item label="com口:" label-width="70px" prop="com">
+                <el-select v-model="formData.com" placeholder="请选择" style="width:120px" >
+                  <el-option
+                    v-for="item in comOption"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.label"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+      
+            <div style="white-space:nowrap;">
+              <el-form-item label="波特率:" label-width="80px" prop="baudrate">
+                <el-select v-model="formData.baudrate" placeholder="请选择" style="width:120px">
+                  <el-option
+                    v-for="item in baudrateOption"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.label"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+
+            <div style="white-space:nowrap;">
+              <el-form-item label="数据位:" label-width="100px" prop="dataBit">
+                <el-select v-model="formData.dataBit" placeholder="请选择" style="width:120px">
+                  <el-option
+                    v-for="item in dataBitOption"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.label"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
           </div>
-    
-          <div style="white-space:nowrap;margin-right:100px;">
-            <el-form-item label="波特率:" prop="baudrate">
-              <el-select v-model="formData.baudrate" placeholder="请选择" style="width:110px">
-                <el-option
-                  v-for="item in baudrateOption"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.label"
-                ></el-option>
-              </el-select>
+
+          <!-- 表单第二行 -->
+          <div class="form-item-wrapper">
+            <div style="white-space:nowrap;">
+              <el-form-item label="校验位:" label-width="70px" prop="checkBit">
+                <el-select v-model="formData.checkBit" placeholder="请选择" style="width:120px">
+                  <el-option
+                    v-for="item in checkBitOption"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.label"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+
+            <div style="white-space:nowrap;">
+              <el-form-item label="停止位:" label-width="80px" prop="stopBit">
+                <el-select v-model="formData.stopBit" placeholder="请选择" style="width:120px">
+                  <el-option
+                    v-for="item in stopBitOption"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.label"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+
+            <div style="white-space:nowrap;">
+              <el-form-item label="校验方式:" label-width="100px" prop="checkType">
+                <el-select v-model="formData.checkType" placeholder="请选择" style="width:120px">
+                  <el-option
+                    v-for="item in checkTypeOption"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.label"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+          </div>
+
+          <!-- 消息输入框 -->
+          <div class="message-box-wrapper">
+            <el-form-item label="" prop="message">
+              <el-input 
+                type="textarea" 
+                v-model="formData.message" 
+                placeholder="请输入消息"
+                :rows="3"
+              ></el-input>
             </el-form-item>
           </div>
 
-          <div style="white-space:nowrap;margin-right:100px;">
-            <el-form-item label="数据位:" prop="dataBit">
-              <el-select v-model="formData.dataBit" placeholder="请选择" style="width:75px">
-                <el-option
-                  v-for="item in dataBitOption"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.label"
-                ></el-option>
-              </el-select>
-            </el-form-item>
+          <!-- 发送 && 重置 -->
+          <div class="submitBtn-wrapper">
+            <el-button type="primary" size="mini" @click="onSubmit">发送</el-button>
+            <el-button size="mini" @click="resetForm">重置</el-button>
           </div>
+        </el-form>
 
-          <div style="white-space:nowrap;margin-right:100px;">
-            <el-form-item label="校验位:" prop="checkBit">
-              <el-select v-model="formData.checkBit" placeholder="请选择" style="width:95px">
-                <el-option
-                  v-for="item in checkBitOption"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.label"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-          </div>
-
-          <div style="white-space:nowrap;margin-right:100px;">
-            <el-form-item label="停止位:" prop="stopBit">
-              <el-select v-model="formData.stopBit" placeholder="请选择" style="width:75px">
-                <el-option
-                  v-for="item in stopBitOption"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.label"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-          </div>
-
-          <div style="white-space:nowrap;margin-right:85px;">
-            <el-form-item label="校验方式:" prop="checkType">
-              <el-select v-model="formData.checkType" placeholder="请选择" style="width:110px">
-                <el-option
-                  v-for="item in checkTypeOption"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.label"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-          </div>
+        <div class="box2-wrapper">
+          <div v-for="(item, index) in messageList" :key="index">{{ item }}</div>
+        </div>
+        
+        <div class="submitBtn-wrapper" style="margin-top:15px;">
+          <el-button type="danger" size="mini" @click="clearMessage" >清空</el-button>
         </div>
 
-        <div class="message-box-wrapper">
-          <el-form-item label="" prop="message">
-            <el-input 
-              type="textarea" 
-              v-model="formData.message" 
-              placeholder="请输入消息"
-              :rows="3"
-            ></el-input>
-          </el-form-item>
-        </div>
-
-        <div class="submitBtn-wrapper">
-          <el-button type="primary" size="mini" @click="onSubmit">发送</el-button>
-          <el-button size="mini" @click="resetForm" style="margin-right:20px;">重置</el-button>
-        </div>
-      </el-form>
-
-      <el-divider></el-divider>
-
-      <div class="submitBtn-wrapper">
-        <el-button size="mini" @click="clearMessage">清空</el-button>
       </div>
-      <div class="box2-wrapper">
-        <div v-for="(item, index) in messageList" :key="index">{{ item }}</div>
-      </div>
+
     </el-card>
   </div>
 </template>
@@ -434,26 +442,7 @@ export default class ComDebug extends Vue {
 </script>
 
 <style scoped>
-  .form-item-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  .submitBtn-wrapper {
-    display: flex;
-    flex-direction: row-reverse;
-  }
-  .box2-wrapper {
-    border: 1px solid rgb(220, 223, 230);
-    border-radius: 3px;
-    height: 80px;
-    max-height: 80px;
-    margin-top: 15px;
-    padding: 5px 15px;
-    color: #9b9b9b;
-    font-size: 14px;
-    overflow: auto;
-  }
-  
+/* 串口调试标题 */
 .page-title {
   display: flex;
   align-items: center;
@@ -463,6 +452,31 @@ export default class ComDebug extends Vue {
 }
 .page-title img {
   margin-right: 5px;
+}
+/* 串口调试内容 */
+.ComDebug-content {
+  margin-top: 30px;
+  width: 850px;
+  margin: 0 auto;
+}
+.form-item-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+.submitBtn-wrapper {
+  display: flex;
+  justify-content: center;
+}
+.box2-wrapper {
+  border: 1px solid rgb(220, 223, 230);
+  border-radius: 3px;
+  height: 80px;
+  max-height: 80px;
+  margin-top: 35px;
+  padding: 5px 15px;
+  color: #9b9b9b;
+  font-size: 14px;
+  overflow: auto;
 }
 </style>
 
