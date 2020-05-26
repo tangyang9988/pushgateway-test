@@ -20,7 +20,7 @@
                         v-for="item in logLevelOption"
                         :key="item.value"
                         :label="item.label"
-                        :value="item.label"
+                        :value="item.value"
                     ></el-option>
                 </el-select>
                 时间范围:
@@ -44,7 +44,11 @@
             >
                 <el-table-column type="index" :index="getRowIndex" align="center"></el-table-column>
                 <el-table-column prop="InsertTime" label="日期" width="180" align="center"  ></el-table-column>
-                <el-table-column prop="LogLevel" label="级别" width="80" align="center"></el-table-column>
+                <el-table-column prop="LogLevel" label="级别" width="80" align="center">
+                    <template slot-scope="scope">
+                        <span :class="scope.row.LogLevel=='error'?'redColor':`${scope.row.LogLevel=='warning'?'yellowColor':'greenColor'}`">{{scope.row.LogLevel}}</span>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="Field" label="记录者" width="180" align="center"></el-table-column>
                 <el-table-column prop="Content" label="消息"></el-table-column>
             </el-table>
@@ -102,7 +106,7 @@ export default class GmsLogs extends Vue {
     page: number = 1;
     totalNum:number = 0
 
-    logLevel = '全部'
+    logLevel = ''
     logLevelOption = [
         {
             value: '',
@@ -110,11 +114,15 @@ export default class GmsLogs extends Vue {
         },
         {
             value: 'error',
-            label: 'error',
+            label: '错误',
+        },
+        {
+            value: 'warning',
+            label: '警告',
         },
         {
             value: 'info',
-            label: 'info',
+            label: '正常',
         },
     ]
     showPagination:boolean = true
@@ -133,12 +141,11 @@ export default class GmsLogs extends Vue {
     loadLogs() {
         this.loading = true;
         this.showPagination = false
-        let _logLevel = this.logLevel=='全部'?'':this.logLevel
         
         LogService.Query(
             this.pageSize, 
             this.page,
-            _logLevel,
+            this.logLevel,
             this.times[0],
             this.times[1]
         ).then((res:any) => {
@@ -171,14 +178,6 @@ export default class GmsLogs extends Vue {
 .logsTable {
 }
 
-.logsTable >>> .warning-row {
-    color: yellow;
-}
-
-.logsTable >>> .error-row {
-    color: red;
-}
-
 .page-title {
   display: flex;
   align-items: center;
@@ -188,5 +187,14 @@ export default class GmsLogs extends Vue {
 }
 .page-title img {
   margin-right: 5px;
+}
+.redColor {
+    color: red;
+}
+.yellowColor {
+    color: rgba(255, 208, 0, 0.856);
+}
+.greenColor {
+    color: rgb(4, 248, 4);
 }
 </style>
