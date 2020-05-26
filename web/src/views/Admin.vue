@@ -4,14 +4,14 @@
     <el-header class="ops-header">
       <div class="header-content">
         <div class="header-logo-wrapper">
-          <img class="header-logo-img" :src="lcLogo" />
+          <img class="header-logo-img" src="@/assets/images/lcLogo.png" />
           <div class="header-logo-title">蓝创云采网关管理系统</div>
         </div>
 
         <div>
           <el-dropdown @command="onUserCommand">
             <div style="display:flex;">
-              <el-avatar :src="userImg" size="small"></el-avatar>
+              <el-avatar src="@/assets/images/user.png" size="small"></el-avatar>
               <div style="line-height:28px;margin-left:10px;">{{username}}<i class="el-icon-arrow-down el-icon--right"></i></div>
             </div>
             <el-dropdown-menu slot="dropdown">
@@ -31,29 +31,31 @@
           text-color="#fff"
           active-text-color="#fff"
         >
-          <el-menu-item
-            v-for="(sub,i) in menus"
-            :index="sub.index"
-            v-if="permission == '1'"
-            :key="i"
-          >
-            <template slot="title">
-              <i v-if="sub.icon" :class="sub.icon"></i>
-              {{sub.title}}
-            </template>
-          </el-menu-item>
-
-          <el-menu-item
-            v-for="(sub,index) in commonMenus"
-            :index="sub.index"
-            :key="index"
-            v-if="permission != '1'"
-          >
-            <template slot="title">
-              <i v-if="sub.icon" :class="sub.icon"></i>
-              {{sub.title}}
-            </template>
-          </el-menu-item>
+          <div v-if="permission == '1'">
+            <el-menu-item
+              v-for="(sub,i) in menus"
+              :index="sub.index"
+              :key="i"
+            >
+              <template slot="title">
+                <i v-if="sub.icon" :class="sub.icon"></i>
+                {{sub.title}}
+              </template>
+            </el-menu-item>
+          </div>
+          <div v-else>
+            <el-menu-item
+              v-for="(sub,index) in commonMenus"
+              :index="sub.index"
+              :key="index"
+              
+            >
+              <template slot="title">
+                <i v-if="sub.icon" :class="sub.icon"></i>
+                {{sub.title}}
+              </template>
+            </el-menu-item>
+          </div>
         </el-menu>
       </el-aside>
       <!-- Main -->
@@ -66,8 +68,6 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import lcLogo from '@/assets/images/lcLogo.png';
-import userImg from '@/assets/images/user.png';
 
 @Component
 export default class Admin extends Vue {
@@ -98,8 +98,6 @@ export default class Admin extends Vue {
   permission = "";
   heiGht =  window.innerHeight+'px'
   username: string = '用户'
-  lcLogo: any = lcLogo
-  userImg: any = userImg
     
   /** 当前登录用户菜单的相关命令处理 */
   onUserCommand(command: string) {
