@@ -38,7 +38,7 @@
                 :data="logs" 
                 v-loading="loading" 
                 class="logsTable" 
-                size="large" 
+                size="small" 
                 border 
                 :row-class-name="rowClass"
             >
@@ -70,7 +70,6 @@
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import LogService from "@/services/LogService";
  
-
 @Component
 export default class GmsLogs extends Vue {
     @Prop({ default: '10.211.55.2' }) node!: string

@@ -83,6 +83,10 @@ const routes = [
                 component: () => import(/* webpackChunkName: "logs" */ '../components/Logs/GmsLogs.vue')
             },
             {
+                path: 'alarm',
+                component: () => import(/* webpackChunkName: "logs" */ '../components/Logs/GmsAlarmLogs.vue')
+            },
+            {
                 path: 'tools',
                 component: () => import(/* webpackChunkName: "tools" */ '../components/Tools/GmsTools.vue')
             },
