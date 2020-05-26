@@ -5,7 +5,7 @@
       
       <div slot="header">
           <div class="page-title">
-              <img :src="pageTitleImg" alt="">
+              <img src="@/assets/images/pageTitle.png" alt="">
               <span>反控设置</span>
           </div>
       </div>
@@ -183,7 +183,7 @@
 import { Component, Prop, Watch, Vue } from "vue-property-decorator";
 import HeaderCardList from "../RTU/HeaderCardList.vue";
 import DtuService from "@/services/DtuService";
-import pageTitleImg from '@/assets/images/pageTitle.png'
+ 
 
 @Component({
   components: {
@@ -194,7 +194,7 @@ export default class DynamicControlCard extends Vue {
   /** 当前设备 */
   @Prop({ default: null }) dtu!: any;
 
-  pageTitleImg :any = pageTitleImg
+ 
   cp = "";
   cn = "";
   uuid ="";

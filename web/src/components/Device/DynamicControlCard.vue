@@ -12,7 +12,7 @@
     <el-card>
       <div slot="header">
           <div class="page-title">
-              <img :src="pageTitleImg" alt="">
+              <img src="@/assets/images/pageTitle.png" alt="">
               <span>动态管控</span>
           </div>
       </div>
@@ -34,7 +34,7 @@
     <el-card style="margin-top:8px;">
       <div slot="header">
           <div class="page-title">
-              <img :src="pageTitleImg" alt="">
+              <img src="@/assets/images/pageTitle.png" alt="">
               <span>实时动态图</span>
           </div>
       </div>
@@ -55,7 +55,7 @@ Vue.use(Chartkick.use(Chart));
 
 import GaugeCard from "@/components/GaugeCard.vue";
 import HeaderCardList from "../RTU/HeaderCardList.vue";
-import pageTitleImg from '@/assets/images/pageTitle.png'
+ 
 
 @Component({
   components: {
@@ -94,7 +94,7 @@ export default class DynamicControlCard extends Vue {
     this.load();
   }
 
-  pageTitleImg :any = pageTitleImg
+ 
   dynamicData = []
   dynamicMessages=[]
   range = 2000; //时间范围

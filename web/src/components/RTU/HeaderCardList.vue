@@ -5,11 +5,11 @@
     </div>
     <div class="proInfo">
       <div class="page-title">
-        <img :src="pageTitleImg" alt="">
+        <img src="@/assets/images/pageTitle.png" alt="">
         <span style="font-size: 18px;">MN：{{MNStr}}</span>
       </div>
       <div class="page-title">
-        <img :src="pageTitleImg" alt="">
+        <img src="@/assets/images/pageTitle.png" alt="">
         <span style="font-size: 18px;">所属项目：{{projectName}}</span>
       </div>
     </div>
@@ -20,7 +20,7 @@
 
           <div slot="header">
             <div class="page-title">
-              <img :src="pageTitleImg" alt="">
+              <img src="@/assets/images/pageTitle.png" alt="">
               <span>工具栏</span>
             </div>
           </div>
@@ -55,7 +55,7 @@
           
           <div slot="header">
             <div class="page-title">
-              <img :src="pageTitleImg" alt="">
+              <img src="@/assets/images/pageTitle.png" alt="">
               <span>系统执行信息</span>
             </div>
           </div>
@@ -81,7 +81,7 @@
 <script lang="ts">
 import { Component, Prop, Watch, Vue } from "vue-property-decorator";
 import RTUInfo from "./RTUInfo.vue";
-import pageTitleImg from '@/assets/images/pageTitle.png'
+ 
 
 import BreadCrumb from "@/components/BreadCrumb.vue";
 @Component({
@@ -103,7 +103,7 @@ export default class HeaderCardList extends Vue {
     this.uuid = sessionStorage.getItem("uuid");
     this.initWebSocket();
   }
-  pageTitleImg :any = pageTitleImg
+ 
   projectName = ""; //项目名称
   MNStr = ""; //MN
   showHeader = false;

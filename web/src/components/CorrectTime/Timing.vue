@@ -5,7 +5,7 @@
       
       <div slot="header">
           <div class="page-title">
-              <img :src="pageTitleImg" alt="">
+              <img src="@/assets/images/pageTitle.png" alt="">
               <span>校时</span>
           </div>
       </div>
@@ -29,7 +29,7 @@ import { Component, Prop, Watch, Vue } from "vue-property-decorator";
 import HeaderCardList from "../RTU/HeaderCardList.vue";
 import CollectService from "@/services/CollectService";
 import DtuService from "@/services/DtuService";
-import pageTitleImg from '@/assets/images/pageTitle.png'
+ 
 
 @Component({
   components: {
@@ -40,7 +40,7 @@ export default class Timing extends Vue {
   /** 当前设备 */
   @Prop({ default: null }) dtu!: any;
 
-  pageTitleImg :any = pageTitleImg
+ 
   currentTime = "";
   cp="";
   cn = "1012";

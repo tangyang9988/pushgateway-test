@@ -5,7 +5,7 @@
       
       <div slot="header">
         <div class="page-title">
-          <img :src="pageTitleImg" alt="">
+          <img src="@/assets/images/pageTitle.png" alt="">
           <span>串口调试</span>
         </div>
       </div>
@@ -129,14 +129,14 @@
 import { Component, Vue } from "vue-property-decorator";
 import ComDebugService from "@/services/ComDebugService";
 import HeaderCardList from "../RTU/HeaderCardList.vue";
-import pageTitleImg from '@/assets/images/pageTitle.png'
+ 
 
 @Component({components: {
     HeaderCardList: HeaderCardList,
 }})
 export default class ComDebug extends Vue {
   
-  pageTitleImg :any = pageTitleImg
+ 
   // 串口选择框数据
   comOption:any[] = [
     {

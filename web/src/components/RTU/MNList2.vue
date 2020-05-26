@@ -8,7 +8,7 @@
       
       <div slot="header">
           <div class="page-title">
-              <img :src="pageTitleImg" alt="">
+              <img src="@/assets/images/pageTitle.png" alt="">
               <span>上传设置</span>
           </div>
       </div>
@@ -108,7 +108,7 @@ import ResendData1 from "./ResendData.vue";
 import HeaderCardList from "./HeaderCardList.vue";
 import RtuService from "@/services/RtuService";
 import FileSaver from "file-saver";
-import pageTitleImg from '@/assets/images/pageTitle.png'
+ 
 
 @Component({
   name: "mnlist",
@@ -119,7 +119,7 @@ import pageTitleImg from '@/assets/images/pageTitle.png'
   }
 })
 export default class mnlist extends Vue {
-  pageTitleImg :any = pageTitleImg
+ 
   mnaddvisable = false;
   resendData = false;
   mnmodifyVisable = false;

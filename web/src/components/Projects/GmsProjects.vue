@@ -3,7 +3,7 @@
     <el-card>
       <div slot="header">
         <div class="page-title">
-          <img :src="pageTitleImg" alt="">
+          <img src="@/assets/images/pageTitle.png" alt="">
           <span>项目管理</span>
         </div>
       </div>
@@ -65,13 +65,13 @@
 import { Component, Prop, Watch, Vue } from "vue-property-decorator";
 import ProjectView from "./ProjectView.vue";
 import ProjectService from "@/services/ProjectService";
-import pageTitleImg from '@/assets/images/pageTitle.png'
+ 
 
 @Component({
   components: { ProjectView: ProjectView }
 })
 export default class GmsProjects extends Vue {
-  pageTitleImg :any = pageTitleImg
+ 
   loading = false;
   projects = [];
   dlgVisible = false;

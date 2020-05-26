@@ -4,7 +4,7 @@
         <el-card>
             <div slot="header">
                 <div class="page-title">
-                    <img :src="pageTitleImg" alt="">
+                    <img src="@/assets/images/pageTitle.png" alt="">
                     <span>用户管理</span>
                 </div>
             </div>
@@ -77,13 +77,11 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 import ProjectService from "@/services/ProjectService"
 import UserService from "@/services/UserService";
 import UserView from "./UserView.vue";
-import pageTitleImg from '@/assets/images/pageTitle.png'
 
 @Component({
     components: { UserView: UserView }
 })
 export default class GmsUsers extends Vue {
-    pageTitleImg :any = pageTitleImg
     loading = false
     users = [] //用户列表
     projects = [] //项目列表

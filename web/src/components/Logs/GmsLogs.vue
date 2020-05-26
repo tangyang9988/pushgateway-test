@@ -3,7 +3,7 @@
         <el-card>
             <div slot="header">
                 <div class="page-title">
-                    <img :src="pageTitleImg" alt="">
+                    <img src="@/assets/images/pageTitle.png" alt="">
                     <span>日志消息</span>
                 </div>
             </div>
@@ -65,13 +65,13 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import LogService from "@/services/LogService";
-import pageTitleImg from '@/assets/images/pageTitle.png'
+ 
 
 @Component
 export default class GmsLogs extends Vue {
     @Prop({ default: '10.211.55.2' }) node!: string
 
-    pageTitleImg :any = pageTitleImg
+   
     times = [new Date(new Date().getTime() - 24*60*60*1000), new Date()]
     timesOptions = {
         shortcuts: [

@@ -6,7 +6,7 @@
       
       <div slot="header">
           <div class="page-title">
-              <img :src="pageTitleImg" alt="">
+              <img src="@/assets/images/pageTitle.png" alt="">
               <span>基础设置</span>
           </div>
       </div>
@@ -53,7 +53,7 @@
 import { Component, Vue } from "vue-property-decorator";
 import HeaderCardList from "./HeaderCardList.vue";
 import DtuService from "@/services/DtuService";
-import pageTitleImg from '@/assets/images/pageTitle.png'
+ 
 
 @Component({
   components: {
@@ -62,7 +62,7 @@ import pageTitleImg from '@/assets/images/pageTitle.png'
 })
 export default class BaseSetting2 extends Vue {
 
-  pageTitleImg :any = pageTitleImg
+ 
   loading = false
   options = [
     {value: 5,label: '5分钟'},

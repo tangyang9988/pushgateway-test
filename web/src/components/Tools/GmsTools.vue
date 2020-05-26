@@ -3,7 +3,7 @@
         <el-card>
             <div slot="header">
                 <div class="page-title">
-                    <img :src="pageTitleImg" alt="">
+                    <img src="@/assets/images/pageTitle.png" alt="">
                     <span>CRC校验工具</span>
                 </div>
             </div>
@@ -17,7 +17,7 @@
         <el-card>
             <div slot="header">
                 <div class="page-title">
-                    <img :src="pageTitleImg" alt="">
+                    <img src="@/assets/images/pageTitle.png" alt="">
                     <span>Base64->Json</span>
                 </div>
             </div>
@@ -31,11 +31,11 @@
 <script lang="ts">
 import { Component, Watch, Vue } from 'vue-property-decorator'
 import ToolService from "@/services/ToolService";
-import pageTitleImg from '@/assets/images/pageTitle.png'
+ 
 
 @Component
 export default class GmsTools extends Vue {
-    pageTitleImg :any = pageTitleImg
+   
     crcSource = "" //待校验命令
     crcResult = "" //校验结果
 

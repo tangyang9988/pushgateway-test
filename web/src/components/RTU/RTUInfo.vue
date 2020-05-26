@@ -14,7 +14,7 @@
           <div slot="header" class="clearfix">
             <div class="card-header-content">
               <div class="page-title">
-                <img :src="pageTitleImg" alt="">
+                <img src="@/assets/images/pageTitle.png" alt="">
                 <span>数采仪历史信息</span>
               </div>
 
@@ -80,7 +80,7 @@
           <div slot="header" class="clearfix">
             <div class="card-header-content">
               <div class="page-title">
-                <img :src="pageTitleImg" alt="">
+                <img src="@/assets/images/pageTitle.png" alt="">
                 <span>数采仪实时数据</span>
               </div>
 
@@ -148,7 +148,7 @@ import { Component, Vue, Watch } from "vue-property-decorator";
 import HeaderCardList from "./HeaderCardList.vue";
 import MNModify from "./MNModify.vue";
 import DtuService from "@/services/DtuService";
-import pageTitleImg from '@/assets/images/pageTitle.png'
+ 
 
 @Component({
   components: {
@@ -156,7 +156,7 @@ import pageTitleImg from '@/assets/images/pageTitle.png'
   }
 })
 export default class rtu extends Vue {
-  pageTitleImg :any = pageTitleImg
+ 
   currentProject = {};
 
   activeName = "5";

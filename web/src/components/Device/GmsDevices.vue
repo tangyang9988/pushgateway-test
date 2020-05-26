@@ -5,7 +5,7 @@
     <el-card>
       <div slot="header">
         <div class="page-title">
-          <img :src="pageTitleImg" alt="">
+          <img src="@/assets/images/pageTitle.png" alt="">
           <span>设备管理</span>
         </div>
       </div>
@@ -159,7 +159,7 @@ import DlgRecriminateControl from "./DlgRecriminateControl.vue";
 import DynamicControlCard from "./DynamicControlCard.vue";
 
 import RTUInfo from "../RTU/RTUInfo.vue";
-import pageTitleImg from '@/assets/images/pageTitle.png'
+ 
 
 @Component({
   components: {
@@ -173,7 +173,7 @@ import pageTitleImg from '@/assets/images/pageTitle.png'
   }
 })
 export default class GmsDevices extends Vue {
-  pageTitleImg :any = pageTitleImg
+ 
   loading = false;
   devices = []; //设备列表
   pageSize = 10;

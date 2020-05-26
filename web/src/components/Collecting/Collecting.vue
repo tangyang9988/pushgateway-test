@@ -5,7 +5,7 @@
       
       <div slot="header">
           <div class="page-title">
-              <img :src="pageTitleImg" alt="">
+              <img src="@/assets/images/pageTitle.png" alt="">
               <span>采集设备配置</span>
           </div>
       </div>
@@ -64,7 +64,7 @@ import HeaderCardList from "../RTU/HeaderCardList.vue";
 import CollectingDevView from "./CollectingDevView.vue";
 import CollectService from "@/services/CollectService";
 import FileSaver from "file-saver";
-import pageTitleImg from '@/assets/images/pageTitle.png'
+ 
 
 @Component({
   components: {
@@ -74,7 +74,7 @@ import pageTitleImg from '@/assets/images/pageTitle.png'
   }
 })
 export default class Collecting extends Vue {
-  pageTitleImg :any = pageTitleImg
+ 
   collectingAddVisable = false;
   loading = false;
   rtuDevices = [];

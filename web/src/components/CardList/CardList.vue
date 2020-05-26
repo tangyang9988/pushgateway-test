@@ -4,20 +4,20 @@
 
     <div style="display:flex;flex-direction:row-reverse;">
       <!-- 离线 -->
-      <div style="display:flex;margin:0 5px;" @click="filterDtu(0)">
+      <div style="display:flex;margin:0 5px;">
         <el-button style="padding: 3px;" icon="el-icon-s-opportunity" type="info" size="large"></el-button>
-        <div style="white-space:nowrap;" :class="countActive==0?'countActive':'count'">离线：{{offLineList.length}}台</div> 
+        <div style="white-space:nowrap;">离线：{{offlineNum}}台</div> 
       </div>
       <!-- 在线 -->
-      <div style="display:flex;margin:0 5px;" @click="filterDtu(1)">
+      <div style="display:flex;margin:0 5px;">
         <el-button style="padding: 3px;" icon="el-icon-s-opportunity" type="success" size="large"></el-button>
-        <div style="white-space:nowrap;" :class="countActive==1?'countActive':'count'">在线：{{onLineList.length}}台</div> 
+        <div style="white-space:nowrap;">在线：{{onlineNum}}台</div> 
       </div>
       <!-- 总数 -->
-      <div style="display:flex;margin:0 5px;" @click="filterDtu(2)">
+      <!-- <div style="display:flex;margin:0 5px;">
         <el-button style="padding: 3px;" icon="el-icon-s-opportunity" type="primary" size="large"></el-button>
-        <div style="white-space:nowrap;" :class="countActive==2?'countActive':'count'">总数：{{onLineList.length+offLineList.length}}台</div> 
-      </div>
+        <div style="white-space:nowrap;">总数：{{onlineNum + offlineNum}}台</div> 
+      </div> -->
     </div>
 
     <!-- 顶部button -->
@@ -26,8 +26,8 @@
           <span>项目名称：</span>
           <el-select v-model="proId" placeholder="请选择" @change="currentSel">
             <el-option
-              v-for="(item, index) in projects"
-              :key="index"
+              v-for="(item, i) in projects"
+              :key="i"
               :label="item.ProjectName"
               :value="item.Id"
             ></el-option>
@@ -36,7 +36,7 @@
           <el-input v-model="RtuName" placeholder="请输入"></el-input>
           <span style="margin-left:10px;">MN：</span>
           <el-input v-model="RtuMn" placeholder="请输入"></el-input>
-          <el-button @click="searchDevices" type="primary" icon="el-icon-search" style="margin-left:10px;">查询</el-button>
+          <el-button @click="loadDTUs" type="primary" icon="el-icon-search" style="margin-left:10px;">查询</el-button>
           <el-button @click="flash" type="primary" icon="fas fa-sync-alt fa-fw">刷新</el-button>
       </div>
 
@@ -53,8 +53,8 @@
       <div v-infinite-scroll="load" class="cards-wrapper">
         <el-col 
           :span="4"
-          v-for="(card, index) in cardList"
-          :key="index"
+          v-for="(card, cardIndex) in cardList"
+          :key="cardIndex"
           style="display:flex;justify-content:center;"
         >
           <el-card
@@ -63,7 +63,7 @@
           >
             <div slot="header" class="card-header">
               <div>
-                <img :class="card.Online?'light-green':'light-grey'" :src="LightImg" alt="状态灯">
+                <img :class="card.Online?'light-green':'light-grey'" src="@/assets/images/light.png" alt="状态灯">
                 <!-- <el-button class="card-header-light" icon="el-icon-s-opportunity" :type="card.Online?'success':'info'" size="large"></el-button> -->
                 <span class="card-header-rtuName" @click="openRTUInfo(card)">{{card.RtuName}}</span>
               </div>
@@ -100,7 +100,6 @@ import GaugeCard from "@/components/GaugeCard.vue";
 import DtuService from "@/services/DtuService";
 import GmsMessages from "../Device/GmsMessages.vue";
 import CardView from "./CardView.vue";
-import LightImg from "@/assets/images/light.png";
 
 @Component({
   components: {
@@ -111,7 +110,6 @@ import LightImg from "@/assets/images/light.png";
 })
 export default class CardList extends Vue {
 
-  LightImg:any = LightImg;
   gagues = { Nodes: 0, Devices: 0, Sessions: 0 };
   loading = false;
   devices:any = []; //设备列表
@@ -127,53 +125,27 @@ export default class CardList extends Vue {
   addDeviceVisable = false; //新增设备
   isAddVisable = false; //是否新增
   projects = []; // 项目列表
-  isClear = false // 重置表单验证
-  onLineList:any[] = []  // 在线设备列表
-  offLineList:any[] = [] // 离线设备列表
+  isClear = false // 重置表单验证--子组件
   index:number = 0  // 懒加载页数
   cardList:any[] = [] // 懒加载展示数据
   finished:boolean = false  // true-可以加载 false-到底了（不能加载)
-  filterList:any[] = []
-  countActive:number = 2
   uuid = ""; // websocket唯一标识
-  /**
-   * 筛选方法
-   * @type {number} 筛选类型 0-离线 1-在线 2-全部 默认2-全部
-   */
-  filterDtu(type:number = 2) {
-    this.countActive = type
-    // 筛选列表
-    this.filterList = []
-    this.cardList = []
-    this.devices.forEach((item:any, index:number) => {
-      if(type == 2) {
-        this.filterList.push(item)
-      }else if(item.Online == type) {
-        this.filterList.push(item)
-      }
-    })
-    // 重置滚动条
-    let cardsDom = document.getElementById('cards-box')
-    if(cardsDom) cardsDom.scrollTop = 0
-    // 重置懒加载
-    this.index = 0
-    this.finished = false
-    this.load()
-  }
+  onlineNum:number = 0  // 在线数量
+  offlineNum:number = 0 // 离线数量
 
   /**
    * 懒加载
    */
   load() {
-    if(this.filterList.length > 0) {
+    if(this.devices.length > 0) {
       if(this.finished) {
         this.$message.success('到底啦')
       }else {
-        if(this.filterList.length < 42+this.index*12) {
-          this.cardList = this.filterList.slice(0, this.filterList.length)
+        if(this.devices.length < 42+this.index*12) {
+          this.cardList = this.devices.slice(0, this.devices.length)
           this.finished = true
         }else {
-          this.cardList = this.filterList.slice(0,42+this.index*12)
+          this.cardList = this.devices.slice(0,42+this.index*12)
         }
         this.index++
       }
@@ -195,55 +167,44 @@ export default class CardList extends Vue {
       <any>this.proId,
       <any>this.RtuMn,
       <any>this.RtuName
-    )
-      .then(res => {
-        this.$set(this, "devices", res.data);
-        this.loading = false
-        if (this.devices == undefined || this.devices.length <= 0) {
-          this.$message.warning("暂无数据");
-        }else {
-          this.devices.forEach((item:any, index:number) => {
-            item.Online ? this.onLineList.push(item) : this.offLineList.push(item)
-          })
-          this.filterList = this.devices
-          this.load() 
-        }
-      })
-      .catch(err => {
-        this.loading = false;
-        this.$message.error("加载数采仪列表失败:" + err);
-      });
-    this.loadProjects();
-    // this.loadOnline();
+    ).then(res => {
+      this.$set(this, "devices", res.data);
+      this.loading = false
+      if (this.devices == undefined || this.devices.length <= 0) {
+        this.$message.warning("暂无数据");
+      }else {
+        this.cardList = []
+        this.load() 
+      }
+    }).catch(err => {
+      this.loading = false;
+      this.$message.error("加载数采仪列表失败:" + err);
+    })
+    this.loadProjects()
   }
 
-  //在线
-  // loadOnline() {
-  //   DtuService.onlineCounts()
-  //     .then(res => {
-  //       const onlineCounts = new Map;
-  //       console.log(onlineCounts)
-  //       this.$set(this, "onlineCounts", res.data);
-  //     })
-  //     .catch(err => {
-  //       this.$message.error("加载在线离线数错误:" + err);
-  //     });
-  // }
+  /**
+   * 加载设备数量
+   */
+  loadOnline() {
+    DtuService.onlineCounts().then(res => {
+
+    }).catch(err => {
+      this.$message.error("设备数量接口错误:" + err)
+    })
+  }
+
   // 项目列表
   loadProjects() {
-    DtuService.currentList()
-      .then(res => {
-        this.$set(this, "projects", res.data);
-      })
-      .catch(err => {
-        this.$message.error("加载项目列表错误:" + err);
-      });
+    DtuService.currentList().then(res => {
+      this.$set(this, "projects", res.data)
+    }).catch(err => {
+      this.$message.error("加载项目列表错误:" + err)
+    })
   }
 
   //打开RTUInfo
   openRTUInfo(e: any) {
-    //console.log("卡片信息：",e)\
-    // console.log("页面跳转传值，rtumn:",e.RtuMn,"project name:",e.TProject.ProjectName)
     this.uuid = this.getUuid();
     sessionStorage.setItem("uuid", this.uuid);
     //判断是否重置【系统执行信息】
@@ -279,16 +240,15 @@ export default class CardList extends Vue {
     this.proId = null;
     this.activeCard = null;
     this.curCard = null;
-    this.finished = false // 重置懒加载
+    // 重置懒加载
+    this.finished = false 
+    this.index = 0
     // 重置滚动条
     let cardsDom = document.getElementById('cards-box')
     if(cardsDom) cardsDom.scrollTop = 0
 
     this.loadDTUs()
-  }
-  //查询设备
-  searchDevices() {
-    this.loadDTUs();
+    this.loadOnline()
   }
 
   //历史消息
@@ -348,54 +308,9 @@ export default class CardList extends Vue {
     this.activeCard = e;
   }
 
-  // 获取滚动条当前的位置
-  getScrollTop() {
-    var scrollTop = 0;
-    if (document.documentElement && document.documentElement.scrollTop) {
-      scrollTop = document.documentElement.scrollTop;
-    } else if (document.body) {
-      scrollTop = document.body.scrollTop;
-    }
-    return scrollTop;
-  }
-  // 获取当前可视范围的高度
-  getClientHeight() {
-    var clientHeight = 0;
-    if (document.body.clientHeight && document.documentElement.clientHeight) {
-      clientHeight = Math.min(
-        document.body.clientHeight,
-        document.documentElement.clientHeight
-      );
-    } else {
-      clientHeight = Math.max(
-        document.body.clientHeight,
-        document.documentElement.clientHeight
-      );
-    }
-    return clientHeight;
-  }
-
-  // 获取文档完整的高度
-  getScrollHeight() {
-    return Math.max(
-      document.body.scrollHeight,
-      document.documentElement.scrollHeight
-    );
-  }
-  // 滚动事件触发下拉加载
-  // onScroll() {
-  //   if (this.getScrollHeight() - this.getClientHeight() - this.getScrollTop() <= 0) {
-  //     if (this.status === 1) {
-  //       this.status = 0;
-  //       // 页码，分页用，默认第一页
-  //       this.deliverParams.page += 1;
-  //       // 调用请求函数
-  //       alert("触发！！！");
-  //     }
-  //   }
-  // }
   mounted() {
-    this.loadDTUs();
+    this.loadDTUs()
+    this.loadOnline()
     
     // 设置卡片容器高度
     let cardBoxHeight = window.innerHeight - 210
@@ -418,13 +333,7 @@ export default class CardList extends Vue {
 }
 /* 设备数量 */
 .count {
-  cursor: pointer;
   font-size: 15px;
-}
-.countActive {
-  cursor: pointer;
-  font-size: 15px;
-  color: rgb(64, 158, 255);
 }
 /* 头部 */
 .headerBtn {
