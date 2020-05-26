@@ -49,8 +49,8 @@
 import { Component, Prop, Watch, Vue } from "vue-property-decorator";
 import DtuService from "@/services/DtuService";
 // import LineChart from '@/components/Charts/LineChart.js';
-import Chartkick from "vue-chartkick";
-import Chart from "chart.js";
+const Chartkick = require('vue-chartkick')
+const Chart = require('chart.js')
 Vue.use(Chartkick.use(Chart));
 
 import GaugeCard from "@/components/GaugeCard.vue";

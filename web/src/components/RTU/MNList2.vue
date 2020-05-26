@@ -162,7 +162,7 @@ export default class mnlist extends Vue {
   /** 导入 */
   importJSON() {
     let fileDom = document.getElementById("file")
-    const file = fileDom?fileDom.files[0]:null
+    const file = fileDom?(fileDom as any).files[0]:null
     const reader = new FileReader();
     reader.readAsText(file);
     const _this = this;

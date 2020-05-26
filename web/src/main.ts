@@ -9,11 +9,10 @@ import { Message, Loading, Card, Button, Input, InputNumber, Select, Option, Con
 import { Row, Col, Table, TableColumn, Dialog, DatePicker, Pagination, Tag, Radio, Form, FormItem, ButtonGroup, MessageBox, Divider, Checkbox,CheckboxGroup,CheckboxButton,Tabs,TabPane,RadioGroup,Breadcrumb,BreadcrumbItem } from 'element-ui'
 import * as filters from "./utils/time"; //过滤器
 //动态管控图
-import Chartkick from 'chartkick'
-import VueChartkick from 'vue-chartkick'
-import Chart from 'chart.js'
-
-import infiniteScroll from 'vue-infinite-scroll'
+const Chartkick = require('chartkick')
+const VueChartkick = require('vue-chartkick')
+const Chart = require('chart.js')
+const infiniteScroll = require('vue-infinite-scroll')
 
 
 require('@fortawesome/fontawesome-free/css/fontawesome.min.css')
