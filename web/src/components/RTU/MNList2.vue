@@ -6,14 +6,12 @@
     <br />
     <el-card class="box-card">
       
-      <div slot="header">
-          <div class="page-title">
-              <img src="@/assets/images/pageTitle.png" alt="">
-              <span>上传设置</span>
-          </div>
+      <div class="page-title">
+        <img src="@/assets/images/pageTitle.png" alt="">
+        <span>上传设置</span>
       </div>
 
-      <div>
+      <div style="margin-top:15px">
         <el-row :gutter="20">
           <el-col :span="12">
             <div class="grid-content bg-purple">
@@ -107,7 +105,7 @@ import MnAdd from "./MnAdd.vue";
 import ResendData1 from "./ResendData.vue";
 import HeaderCardList from "./HeaderCardList.vue";
 import RtuService from "@/services/RtuService";
-import FileSaver from "file-saver";
+const FileSaver = require('file-saver')
  
 
 @Component({

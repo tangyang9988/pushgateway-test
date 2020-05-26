@@ -10,11 +10,9 @@
 
     <!-- <el-button @click="load" type="primary">刷新</el-button> -->
     <el-card>
-      <div slot="header">
-          <div class="page-title">
-              <img src="@/assets/images/pageTitle.png" alt="">
-              <span>动态管控</span>
-          </div>
+      <div class="page-title">
+        <img src="@/assets/images/pageTitle.png" alt="">
+        <span>动态管控</span>
       </div>
       
       <el-button @click="CloseDynamic()" type="danger" size="small" style="float:right">关闭动态管控</el-button>
@@ -32,13 +30,11 @@
     </el-card>
     
     <el-card style="margin-top:8px;">
-      <div slot="header">
-          <div class="page-title">
-              <img src="@/assets/images/pageTitle.png" alt="">
-              <span>实时动态图</span>
-          </div>
+      <div class="page-title">
+        <img src="@/assets/images/pageTitle.png" alt="">
+        <span>实时动态图</span>
       </div>
-      <div style="width:100%;"><line-chart :data="chartData" height="200px"></line-chart></div>
+      <div style="width:100%;margin-top:15px"><line-chart :data="chartData" height="200px"></line-chart></div>
       <!-- <div style="float:right;margin-right:0%;margin-top:-17%;width:50%"><line-chart :data="[[new Date(), 5], [1368174456, 4], ['2013-05-07 00:00:00 UTC', 7]]"></line-chart></div> -->
     </el-card>
   </div>
@@ -49,7 +45,7 @@
 import { Component, Prop, Watch, Vue } from "vue-property-decorator";
 import DtuService from "@/services/DtuService";
 // import LineChart from '@/components/Charts/LineChart.js';
-const Chartkick = require('vue-chartkick')
+const Chartkick = require('chartkick')
 const Chart = require('chart.js')
 Vue.use(Chartkick.use(Chart));
 

@@ -2,14 +2,12 @@
   <div>
     <header-card-list></header-card-list>
     <el-card>
-      
-      <div slot="header">
-          <div class="page-title">
-              <img src="@/assets/images/pageTitle.png" alt="">
-              <span>采集设备配置</span>
-          </div>
+      <div class="page-title">
+        <img src="@/assets/images/pageTitle.png" alt="">
+        <span>采集设备配置</span>
       </div>
-      <div style="margin-bottom:10px;">
+      
+      <div style="margin:15px 0;">
         <el-button type="primary" @click="showCollectingView" size="small">新增</el-button>
         <el-button type="primary" @click="flash" size="small">刷新</el-button>
       </div>

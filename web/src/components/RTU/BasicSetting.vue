@@ -4,11 +4,9 @@
     <br />
     <el-card>
       
-      <div slot="header">
-          <div class="page-title">
-              <img src="@/assets/images/pageTitle.png" alt="">
-              <span>基础设置</span>
-          </div>
+      <div class="page-title">
+        <img src="@/assets/images/pageTitle.png" alt="">
+        <span>基础设置</span>
       </div>
 
       <el-form ref="form" :model="ruleForm" :rules="rules">

@@ -25,15 +25,15 @@ body {
 
 /*修改滚动条样式*/
 *::-webkit-scrollbar{
-    width:10px;
-    height:10px;
+    width:8px;
+    height:8px;
 }
 *::-webkit-scrollbar-track{
     background: #fff;
     border-radius: 2px;
 }
 *::-webkit-scrollbar-thumb{
-    background: rgb(175, 175, 175);
+    background: rgb(200, 200, 200);
     border-radius: 10px;
 }
 *::-webkit-scrollbar-thumb:hover{

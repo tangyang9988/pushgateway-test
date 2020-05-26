@@ -24,7 +24,7 @@
     <div class="headerBtn">
       <div class="headerBtn-left">
           <span>项目名称：</span>
-          <el-select v-model="proId" placeholder="请选择" @change="currentSel">
+          <el-select size="medium" v-model="proId" placeholder="请选择" @change="currentSel">
             <el-option
               v-for="(item, i) in projects"
               :key="i"
@@ -33,7 +33,7 @@
             ></el-option>
           </el-select>
           <span style="margin-left:20px;">是否在线：</span>
-          <el-select v-model="online" placeholder="请选择" @change="currentOnline">
+          <el-select size="medium" v-model="online" placeholder="请选择" @change="currentOnline">
             <el-option
               v-for="item in isOnlineOptions"
               :key="item.value"
@@ -42,23 +42,27 @@
             ></el-option>
           </el-select>
           <span style="margin-left:10px;">设备名称：</span>
-          <el-input v-model="RtuName" placeholder="请输入"></el-input>
+          <el-input size="medium" v-model="RtuName" placeholder="请输入"></el-input>
           <span style="margin-left:10px;">MN：</span>
-          <el-input v-model="RtuMn" placeholder="请输入"></el-input>
+          <el-input size="medium" v-model="RtuMn" placeholder="请输入"></el-input>
           <el-button
+            size="medium"
             @click="loadDTUs"
             type="primary"
             icon="el-icon-search"
             style="margin-left:10px;"
           >查询</el-button>
-          <el-button @click="flash" type="primary" icon="fas fa-sync-alt fa-fw">刷新</el-button>
+          <el-button size="medium" @click="flash" type="primary" icon="fas fa-sync-alt fa-fw">刷新</el-button>
       </div>
 
       <div class="headerBtn-right">
-        <el-tag @click="onEdit" type="danger">编辑设备</el-tag>
+        <!-- <el-tag @click="onEdit" type="danger">编辑设备</el-tag>
         <el-tag @click="onDelete" type="danger" style="margin-left:10px;">删除设备</el-tag>
-        <el-tag @click="onCreate" type="success" style="margin-left:10px;">新增设备</el-tag>
-        <el-button @click="loadDTUs" type="primary" style="margin-left:10px;">上传设备列表</el-button>
+        <el-tag @click="onCreate" type="success" style="margin-left:10px;">新增设备</el-tag> -->
+        <el-button size="medium" type="primary" icon="el-icon-edit-outline" @click="onEdit"><!-- 编辑 --></el-button>
+        <el-button size="medium" type="danger" icon="el-icon-delete" @click="onDelete"><!-- 删除 --></el-button>
+        <el-button size="medium" type="success" icon="el-icon-plus" @click="onCreate"><!-- 新增 --></el-button>
+        <el-button size="medium" @click="loadDTUs" type="primary" style="margin-left:10px;">上传设备列表</el-button>
       </div>
     </div>
 
@@ -371,8 +375,10 @@ export default class CardList extends Vue {
 </script>
 <style>
 #page-content {
-  height: 100%;
+  height: calc(100% - 20px);
   min-width: 1665px;
+  background: #fff;
+  padding: 10px;
 }
 /* 设备数量 */
 .count {
@@ -387,8 +393,8 @@ export default class CardList extends Vue {
 .headerBtn .el-input {
   width: 190px;
 }
-.headerBtn-right .el-tag {
-  cursor: pointer;
+.headerBtn-right .el-button {
+  padding: 10px;
 }
 /* 卡片列表 */
 #cards-box {
@@ -445,12 +451,12 @@ export default class CardList extends Vue {
   margin-right: 15px;
 }
 .card-cell {
-  width: 270px;
-  min-width: 270px;
+  width: 265px;
+  min-width: 265px;
   margin: 6px 3px;
 }
 .card-active {
-  background: rgb(233, 233, 233);
+  background: #e1f3e1;
 }
 .card-active .card-header-rtuName {
   color: dodgerblue;

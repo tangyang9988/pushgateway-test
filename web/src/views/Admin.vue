@@ -59,7 +59,7 @@
         </el-menu>
       </el-aside>
       <!-- Main -->
-      <el-main style="overflow:auto;">
+      <el-main style="overflow:auto;background:rgb(248,248,248)">
         <router-view></router-view>
       </el-main>
     </el-container>
