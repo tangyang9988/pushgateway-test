@@ -30,8 +30,8 @@
         <el-table-column prop="device_address" label="地址位" align="center"></el-table-column>
         <el-table-column label="操作" align="center">
           <template slot-scope="scope">
-            <el-button type="primary" size="mini" @click="onEdit(scope.row,scope.$index)">编辑</el-button>
-            <el-button type="danger" size="mini" @click="onDelete(scope.$index)">删除</el-button>
+            <el-link type="primary" icon="el-icon-edit-outline" @click="onEdit(scope.row,scope.$index)">编辑</el-link>
+            <el-link style="margin-left:15px;" type="danger" icon="el-icon-delete" @click="onDelete(scope.$index)">删除</el-link>
           </template>
         </el-table-column>
       </el-table>
