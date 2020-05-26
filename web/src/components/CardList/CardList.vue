@@ -32,11 +32,25 @@
               :value="item.Id"
             ></el-option>
           </el-select>
+          <span style="margin-left:20px;">是否在线：</span>
+          <el-select v-model="online" placeholder="请选择" @change="currentOnline">
+            <el-option
+              v-for="item in isOnlineOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
           <span style="margin-left:10px;">设备名称：</span>
           <el-input v-model="RtuName" placeholder="请输入"></el-input>
           <span style="margin-left:10px;">MN：</span>
           <el-input v-model="RtuMn" placeholder="请输入"></el-input>
-          <el-button @click="loadDTUs" type="primary" icon="el-icon-search" style="margin-left:10px;">查询</el-button>
+          <el-button
+            @click="loadDTUs"
+            type="primary"
+            icon="el-icon-search"
+            style="margin-left:10px;"
+          >查询</el-button>
           <el-button @click="flash" type="primary" icon="fas fa-sync-alt fa-fw">刷新</el-button>
       </div>
 
@@ -47,11 +61,11 @@
         <el-button @click="loadDTUs" type="primary" style="margin-left:10px;">上传设备列表</el-button>
       </div>
     </div>
-    
+
     <!-- 卡片列表 -->
     <div id="cards-box">
       <div v-infinite-scroll="load" class="cards-wrapper">
-        <el-col 
+        <el-col
           :span="4"
           v-for="(card, cardIndex) in cardList"
           :key="cardIndex"
@@ -68,16 +82,22 @@
                 <span class="card-header-rtuName" @click="openRTUInfo(card)">{{card.RtuName}}</span>
               </div>
               <div>
-                <el-button class="card-header-historyInfo" type="text" @click="historicalNews(card)">历史消息</el-button>
+                <el-button
+                  class="card-header-historyInfo"
+                  type="text"
+                  @click="historicalNews(card)"
+                >历史消息</el-button>
               </div>
             </div>
 
             <div class="card-content">
               <div>
-                <span class="card-content-label">所属项目</span>{{card.TProject.ProjectName}}
+                <span class="card-content-label">所属项目</span>
+                {{card.TProject.ProjectName}}
               </div>
               <div style="margin-top:10px;">
-                <span class="card-content-label">MN</span>{{card.RtuMn}}
+                <span class="card-content-label">MN</span>
+                {{card.RtuMn}}
               </div>
             </div>
           </el-card>
@@ -118,9 +138,10 @@ export default class CardList extends Vue {
   RtuName = null;
   RtuMn = null;
   proId = null;
+  online:any ="全部";
   activeCard = null;
   curCard: any = null;
-  isSelect:boolean = false  // 是否已经选中卡片
+  isSelect: boolean = false; // 是否已经选中卡片
   dlgMessageVisible = false; //历史消息  对话框是否打开
   addDeviceVisable = false; //新增设备
   isAddVisable = false; //是否新增
@@ -132,6 +153,21 @@ export default class CardList extends Vue {
   uuid = ""; // websocket唯一标识
   onlineNum:number = 0  // 在线数量
   offlineNum:number = 0 // 离线数量
+  // 是否在线
+  isOnlineOptions = [
+    {
+      value: "1",
+      label: "在线"
+    },
+    {
+      value: "0",
+      label: "离线"
+    },
+    {
+      value: "3",
+      label: "全部"
+    }
+  ];
 
   /**
    * 懒加载
@@ -147,7 +183,7 @@ export default class CardList extends Vue {
         }else {
           this.cardList = this.devices.slice(0,42+this.index*12)
         }
-        this.index++
+        this.index++;
       }
     }
   }
@@ -155,6 +191,10 @@ export default class CardList extends Vue {
   // 获取所选项目proId
   currentSel(row: any) {
     this.proId = row;
+  }
+  // 获取所选项目online
+  currentOnline(row: any) {
+    this.online = row;
   }
 
   /** 加载数采仪列表 **/
@@ -165,6 +205,7 @@ export default class CardList extends Vue {
       this.pageSize,
       this.page,
       <any>this.proId,
+      Number(this.online),
       <any>this.RtuMn,
       <any>this.RtuName
     ).then(res => {
@@ -234,18 +275,19 @@ export default class CardList extends Vue {
 
   // 刷新
   flash() {
-    this.isSelect = false
+    this.isSelect = false;
     this.RtuName = null;
     this.RtuMn = null;
     this.proId = null;
+    this.online = null;
     this.activeCard = null;
     this.curCard = null;
     // 重置懒加载
     this.finished = false 
     this.index = 0
     // 重置滚动条
-    let cardsDom = document.getElementById('cards-box')
-    if(cardsDom) cardsDom.scrollTop = 0
+    let cardsDom = document.getElementById("cards-box");
+    if (cardsDom) cardsDom.scrollTop = 0;
 
     this.loadDTUs()
     this.loadOnline()
@@ -259,19 +301,19 @@ export default class CardList extends Vue {
 
   //新增设备
   onCreate() {
-    this.isClear = !this.isClear
+    this.isClear = !this.isClear;
     // 点击新增后取消卡片选中状态
-    this.activeCard = null
-    this.isSelect = false
+    this.activeCard = null;
+    this.isSelect = false;
 
-    this.curCard = {}
+    this.curCard = {};
     this.isAddVisable = true;
     this.addDeviceVisable = true;
   }
   //修改设备
   onEdit() {
     if (this.isSelect) {
-      this.isClear = !this.isClear
+      this.isClear = !this.isClear;
       this.isAddVisable = false;
       this.addDeviceVisable = true;
     } else {
@@ -303,7 +345,7 @@ export default class CardList extends Vue {
   }
   // 选中卡片高亮状态
   selectCard(e: any) {
-    this.isSelect = true
+    this.isSelect = true;
     this.curCard = e;
     this.activeCard = e;
   }
@@ -313,16 +355,16 @@ export default class CardList extends Vue {
     this.loadOnline()
     
     // 设置卡片容器高度
-    let cardBoxHeight = window.innerHeight - 210
-    let cardBox = document.getElementById('cards-box')
-    cardBox ? cardBox.style.height = cardBoxHeight + 'px' : '0px'
+    let cardBoxHeight = window.innerHeight - 210;
+    let cardBox = document.getElementById("cards-box");
+    cardBox ? (cardBox.style.height = cardBoxHeight + "px") : "0px";
 
     // 卡片容器高度自适应
-    window.onresize =()  =>{
-      let cardBoxHeight = window.innerHeight - 210
-      let cardBox = document.getElementById('cards-box')
-      cardBox ? cardBox.style.height = cardBoxHeight + 'px' : '0px'
-    }
+    window.onresize = () => {
+      let cardBoxHeight = window.innerHeight - 210;
+      let cardBox = document.getElementById("cards-box");
+      cardBox ? (cardBox.style.height = cardBoxHeight + "px") : "0px";
+    };
   }
 }
 </script>
@@ -337,12 +379,12 @@ export default class CardList extends Vue {
 }
 /* 头部 */
 .headerBtn {
-  display:flex;
-  justify-content:space-between;
+  display: flex;
+  justify-content: space-between;
   margin-top: 15px;
 }
 .headerBtn .el-input {
-  width: auto;
+  width: 190px;
 }
 .headerBtn-right .el-tag {
   cursor: pointer;
@@ -365,7 +407,7 @@ export default class CardList extends Vue {
   padding: 15px;
 }
 .light-green {
-  background: #67C23A;
+  background: #67c23a;
   padding: 3px 5px;
   border-radius: 50%;
   vertical-align: middle;
