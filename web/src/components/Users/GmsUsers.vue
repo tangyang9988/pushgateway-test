@@ -1,49 +1,41 @@
 <template>
     <div>
-        
-        <el-card>
-            <div slot="header">
-                <div class="page-title">
-                    <img :src="pageTitleImg" alt="">
-                    <span>用户管理</span>
-                </div>
-            </div>
-
-            <div>
-
-                <!-- 工具条 -->
-                <div>
-                    <el-button @click="onCreate" type="primary" icon="fas fa-plus-circle fa-fw">新增用户</el-button>
-                    <!-- <el-button @click="onEdit" type="primary" icon="fas fa-edit fa-fw">编辑</el-button>
-                    <el-button @click="onDelete" type="primary" icon="fas fa-minus-circle fa-fw">删除</el-button>
-                    <el-button @click="onResetPwd" type="primary" icon="fas fa-sync-alt fa-fw">重置密码</el-button> -->
-                    <el-button @click="load" type="primary" icon="fas fa-sync-alt fa-fw">刷新</el-button>
-                </div>
-                <br/>
-                <!-- 表格 -->
-                <el-table ref="table" :data="users" v-loading="loading" size="small" @current-change="onCurrentChanged"
-                    border stripe highlight-current-row readonly>
-                    <el-table-column type="index" :index="getRowIndex" label="序号"></el-table-column>
-                    <el-table-column prop="RealName" label="姓名" width="180"></el-table-column>
-                    <el-table-column prop="Username" label="用户名" width="170"></el-table-column>
-                    <el-table-column prop="Role" label="角色" :formatter="formatRole" width="70"></el-table-column>
-                    <el-table-column label="查看项目">
-                        <template slot-scope="scope">
-                            <!-- <el-tag v-for="item in scope.row.ProjectIds" :key="item">
-                                {{ item }}
-                            </el-tag> -->
-                            <el-select disabled v-model="scope.row.ProjectIds" multiple placeholder=" " style="width:100%">
-                                <el-option v-for="item in projects" :key="item.Id"
-                                    :label="item.ProjectName" :value="item.Id">
-                                </el-option>
-                            </el-select>
-                        </template>
-                    </el-table-column>
-                    <el-table-column label="操作" width="400" align="center">
-                    <el-button @click="onEdit" type="primary" size="small">编辑</el-button>
-                    <el-button @click="onDelete" type="primary" size="small">删除</el-button>
-                    <el-button @click="onResetPwd" type="primary" size="small">重置密码</el-button>        
-                    </el-table-column>
+        <!-- 工具条 -->
+        <div>
+        <img :src="imgUrl">
+          <span>用户管理</span>
+          <div style="margin-top:1%">
+          <span>用户名：</span>
+          <el-input v-model="RtuName" placeholder="请输入" style="width:200px"></el-input>
+          <el-button @click="load" type="primary" icon="fas fa-sync-alt fa-fw" style="margin-left:20px">刷新</el-button>
+          <el-button @click="onCreate" type="primary" icon="fas fa-plus-circle fa-fw" >新增用户</el-button>
+          </div>
+        </div>
+        <br/>
+        <!-- 表格 -->
+        <el-table ref="table" :data="users" v-loading="loading" size="small" @current-change="onCurrentChanged"
+            border stripe highlight-current-row readonly>
+            <el-table-column type="index" :index="getRowIndex" label="序号"></el-table-column>
+            <el-table-column prop="RealName" label="姓名" width="180"></el-table-column>
+            <el-table-column prop="Username" label="用户名" width="170"></el-table-column>
+            <el-table-column prop="Role" label="角色" :formatter="formatRole" width="70"></el-table-column>
+            <el-table-column label="查看项目">
+                <template slot-scope="scope">
+                    <!-- <el-tag v-for="item in scope.row.ProjectIds" :key="item">
+                        {{ item }}
+                    </el-tag> -->
+                    <el-select disabled v-model="scope.row.ProjectIds" multiple placeholder=" " style="width:100%">
+                        <el-option v-for="item in projects" :key="item.Id"
+                            :label="item.ProjectName" :value="item.Id">
+                        </el-option>
+                    </el-select>
+                </template>
+            </el-table-column>
+            <el-table-column label="操作" width="400" align="center">
+            <el-button @click="onEdit" type="primary" size="small">编辑</el-button>
+            <el-button @click="onDelete" type="primary" size="small">删除</el-button>
+             <el-button @click="onResetPwd" type="primary" size="small">重置密码</el-button>
+            </el-table-column>
 
                 </el-table>
                 <!-- 分页 -->

@@ -67,8 +67,9 @@
               style="width: 100%"
               :show-header="showHeader"
               size="small"
+              :row-style="{height:'10px'}"
             >
-              <el-table-column prop="execTime" width="150" label></el-table-column>
+              <el-table-column prop="execTime" width="180" label></el-table-column>
               <el-table-column prop="commandName" label></el-table-column>
               <el-table-column prop="execResult" label></el-table-column>
             </el-table>

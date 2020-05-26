@@ -6,38 +6,53 @@
       <!-- 离线 -->
       <div style="display:flex;margin:0 5px;" @click="filterDtu(0)">
         <el-button style="padding: 3px;" icon="el-icon-s-opportunity" type="info" size="large"></el-button>
-        <div style="white-space:nowrap;" :class="countActive==0?'countActive':'count'">离线：{{offLineList.length}}台</div> 
+        <div style="white-space:nowrap;" :class="countActive==0?'countActive':'count'">离线：{{offLineList.length}}台</div>
       </div>
       <!-- 在线 -->
       <div style="display:flex;margin:0 5px;" @click="filterDtu(1)">
         <el-button style="padding: 3px;" icon="el-icon-s-opportunity" type="success" size="large"></el-button>
-        <div style="white-space:nowrap;" :class="countActive==1?'countActive':'count'">在线：{{onLineList.length}}台</div> 
+        <div style="white-space:nowrap;" :class="countActive==1?'countActive':'count'">在线：{{onLineList.length}}台</div>
       </div>
       <!-- 总数 -->
       <div style="display:flex;margin:0 5px;" @click="filterDtu(2)">
         <el-button style="padding: 3px;" icon="el-icon-s-opportunity" type="primary" size="large"></el-button>
-        <div style="white-space:nowrap;" :class="countActive==2?'countActive':'count'">总数：{{onLineList.length+offLineList.length}}台</div> 
+        <div style="white-space:nowrap;" :class="countActive==2?'countActive':'count'">总数：{{onLineList.length+offLineList.length}}台</div>
       </div>
     </div>
 
     <!-- 顶部button -->
     <div class="headerBtn">
       <div class="headerBtn-left">
-          <span>项目名称：</span>
-          <el-select v-model="proId" placeholder="请选择" @change="currentSel">
-            <el-option
-              v-for="(item, index) in projects"
-              :key="index"
-              :label="item.ProjectName"
-              :value="item.Id"
-            ></el-option>
-          </el-select>
-          <span style="margin-left:10px;">设备名称：</span>
-          <el-input v-model="RtuName" placeholder="请输入"></el-input>
-          <span style="margin-left:10px;">MN：</span>
-          <el-input v-model="RtuMn" placeholder="请输入"></el-input>
-          <el-button @click="searchDevices" type="primary" icon="el-icon-search" style="margin-left:10px;">查询</el-button>
-          <el-button @click="flash" type="primary" icon="fas fa-sync-alt fa-fw">刷新</el-button>
+        <span style>项目名称：</span>
+        <el-select v-model="proId" placeholder="请选择" @change="currentSel">
+          <el-option
+            v-for="(item, index) in projects"
+            :key="index"
+            :label="item.ProjectName"
+            :value="item.Id"
+          ></el-option>
+        </el-select>
+        <span style="margin-left:20px;">是否在线：</span>
+        <el-select v-model="online" placeholder="请选择" @change="currentOnline">
+          <el-option
+            v-for="item in isOnlineOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          ></el-option>
+        </el-select>
+
+        <span style="margin-left:10px;">设备名称：</span>
+        <el-input v-model="RtuName" placeholder="请输入"></el-input>
+        <span style="margin-left:10px;">MN：</span>
+        <el-input v-model="RtuMn" placeholder="请输入"></el-input>
+        <el-button
+          @click="searchDevices"
+          type="primary"
+          icon="el-icon-search"
+          style="margin-left:10px;"
+        >查询</el-button>
+        <el-button @click="flash" type="primary" icon="fas fa-sync-alt fa-fw">刷新</el-button>
       </div>
 
       <div class="headerBtn-right">
@@ -47,11 +62,11 @@
         <el-button @click="loadDTUs" type="primary" style="margin-left:10px;">上传设备列表</el-button>
       </div>
     </div>
-    
+
     <!-- 卡片列表 -->
     <div id="cards-box">
       <div v-infinite-scroll="load" class="cards-wrapper">
-        <el-col 
+        <el-col
           :span="4"
           v-for="(card, index) in cardList"
           :key="index"
@@ -63,21 +78,27 @@
           >
             <div slot="header" class="card-header">
               <div>
-                <img :class="card.Online?'light-green':'light-grey'" :src="LightImg" alt="状态灯">
+                <img :class="card.Online?'light-green':'light-grey'" :src="LightImg" alt="状态灯" />
                 <!-- <el-button class="card-header-light" icon="el-icon-s-opportunity" :type="card.Online?'success':'info'" size="large"></el-button> -->
                 <span class="card-header-rtuName" @click="openRTUInfo(card)">{{card.RtuName}}</span>
               </div>
               <div>
-                <el-button class="card-header-historyInfo" type="text" @click="historicalNews(card)">历史消息</el-button>
+                <el-button
+                  class="card-header-historyInfo"
+                  type="text"
+                  @click="historicalNews(card)"
+                >历史消息</el-button>
               </div>
             </div>
 
             <div class="card-content">
               <div>
-                <span class="card-content-label">所属项目</span>{{card.TProject.ProjectName}}
+                <span class="card-content-label">所属项目</span>
+                {{card.TProject.ProjectName}}
               </div>
               <div style="margin-top:10px;">
-                <span class="card-content-label">MN</span>{{card.RtuMn}}
+                <span class="card-content-label">MN</span>
+                {{card.RtuMn}}
               </div>
             </div>
           </el-card>
@@ -120,62 +141,79 @@ export default class CardList extends Vue {
   RtuName = null;
   RtuMn = null;
   proId = null;
+  online ="全部";
   activeCard = null;
   curCard: any = null;
-  isSelect:boolean = false  // 是否已经选中卡片
+  isSelect: boolean = false; // 是否已经选中卡片
   dlgMessageVisible = false; //历史消息  对话框是否打开
   addDeviceVisable = false; //新增设备
   isAddVisable = false; //是否新增
   projects = []; // 项目列表
-  isClear = false // 重置表单验证
-  onLineList:any[] = []  // 在线设备列表
-  offLineList:any[] = [] // 离线设备列表
-  index:number = 0  // 懒加载页数
-  cardList:any[] = [] // 懒加载展示数据
-  finished:boolean = false  // true-可以加载 false-到底了（不能加载)
-  filterList:any[] = []
-  countActive:number = 2
+  isClear = false; // 重置表单验证
+  onLineList: any[] = []; // 在线设备列表
+  offLineList: any[] = []; // 离线设备列表
+  index: number = 0; // 懒加载页数
+  cardList: any[] = []; // 懒加载展示数据
+  finished: boolean = false; // true-可以加载 false-到底了（不能加载)
+  filterList: any[] = [];
+  countActive: number = 2;
   uuid = ""; // websocket唯一标识
+
+  // 是否在线
+  isOnlineOptions = [
+    {
+      value: "1",
+      label: "在线"
+    },
+    {
+      value: "0",
+      label: "离线"
+    },
+    {
+      value: "3",
+      label: "全部"
+    }
+  ];
   /**
    * 筛选方法
    * @type {number} 筛选类型 0-离线 1-在线 2-全部 默认2-全部
    */
-  filterDtu(type:number = 2) {
-    this.countActive = type
+  filterDtu(type: number = 2) {
+    this.countActive = type;
     // 筛选列表
-    this.filterList = []
-    this.cardList = []
-    this.devices.forEach((item:any, index:number) => {
-      if(type == 2) {
-        this.filterList.push(item)
-      }else if(item.Online == type) {
-        this.filterList.push(item)
+    this.filterList = [];
+    this.cardList = [];
+    this.devices.forEach((item: any, index: number) => {
+      if (type == 2) {
+        this.filterList.push(item);
+      } else if (item.Online == type) {
+        this.filterList.push(item);
       }
-    })
+    });
     // 重置滚动条
-    let cardsDom = document.getElementById('cards-box')
-    if(cardsDom) cardsDom.scrollTop = 0
+    let cardsDom = document.getElementById("cards-box");
+    if (cardsDom) cardsDom.scrollTop = 0;
     // 重置懒加载
-    this.index = 0
-    this.finished = false
-    this.load()
+    this.index = 0;
+    this.finished = false;
+    this.load();
   }
 
   /**
    * 懒加载
    */
   load() {
-    if(this.filterList.length > 0) {
-      if(this.finished) {
-        this.$message.success('到底啦')
-      }else {
-        if(this.filterList.length < 42+this.index*12) {
-          this.cardList = this.filterList.slice(0, this.filterList.length)
-          this.finished = true
-        }else {
-          this.cardList = this.filterList.slice(0,42+this.index*12)
+    if (this.filterList.length > 0) {
+      if (this.finished) {
+        this.$message.success("到底啦");
+      } else {
+        if (this.filterList.length < 42 + this.index * 12) {
+          this.cardList = this.filterList.slice(0, this.filterList.length);
+          this.finished = true;
+        } else {
+          this.cardList = this.filterList.slice(0, 42 + this.index * 12);
         }
-        this.index++
+        this.index++;
       }
     }
   }
@@ -183,6 +221,10 @@ export default class CardList extends Vue {
   // 获取所选项目proId
   currentSel(row: any) {
     this.proId = row;
+  }
+  // 获取所选项目online
+  currentOnline(row: any) {
+    this.online = row;
   }
 
   /** 加载数采仪列表 **/
@@ -193,20 +235,23 @@ export default class CardList extends Vue {
       this.pageSize,
       this.page,
       <any>this.proId,
+      Number(this.online),
       <any>this.RtuMn,
       <any>this.RtuName
     )
       .then(res => {
         this.$set(this, "devices", res.data);
-        this.loading = false
+        this.loading = false;
         if (this.devices == undefined || this.devices.length <= 0) {
           this.$message.warning("暂无数据");
-        }else {
-          this.devices.forEach((item:any, index:number) => {
-            item.Online ? this.onLineList.push(item) : this.offLineList.push(item)
-          })
-          this.filterList = this.devices
-          this.load() 
+        } else {
+          this.devices.forEach((item: any, index: number) => {
+            item.Online
+              ? this.onLineList.push(item)
+              : this.offLineList.push(item);
+          });
+          this.filterList = this.devices;
+          this.load();
         }
       })
       .catch(err => {
@@ -273,18 +318,19 @@ export default class CardList extends Vue {
 
   // 刷新
   flash() {
-    this.isSelect = false
+    this.isSelect = false;
     this.RtuName = null;
     this.RtuMn = null;
     this.proId = null;
+    this.online = null;
     this.activeCard = null;
     this.curCard = null;
-    this.finished = false // 重置懒加载
+    this.finished = false; // 重置懒加载
     // 重置滚动条
-    let cardsDom = document.getElementById('cards-box')
-    if(cardsDom) cardsDom.scrollTop = 0
+    let cardsDom = document.getElementById("cards-box");
+    if (cardsDom) cardsDom.scrollTop = 0;
 
-    this.loadDTUs()
+    this.loadDTUs();
   }
   //查询设备
   searchDevices() {
@@ -299,19 +345,19 @@ export default class CardList extends Vue {
 
   //新增设备
   onCreate() {
-    this.isClear = !this.isClear
+    this.isClear = !this.isClear;
     // 点击新增后取消卡片选中状态
-    this.activeCard = null
-    this.isSelect = false
+    this.activeCard = null;
+    this.isSelect = false;
 
-    this.curCard = {}
+    this.curCard = {};
     this.isAddVisable = true;
     this.addDeviceVisable = true;
   }
   //修改设备
   onEdit() {
     if (this.isSelect) {
-      this.isClear = !this.isClear
+      this.isClear = !this.isClear;
       this.isAddVisable = false;
       this.addDeviceVisable = true;
     } else {
@@ -343,7 +389,7 @@ export default class CardList extends Vue {
   }
   // 选中卡片高亮状态
   selectCard(e: any) {
-    this.isSelect = true
+    this.isSelect = true;
     this.curCard = e;
     this.activeCard = e;
   }
@@ -396,18 +442,18 @@ export default class CardList extends Vue {
   // }
   mounted() {
     this.loadDTUs();
-    
+
     // 设置卡片容器高度
-    let cardBoxHeight = window.innerHeight - 210
-    let cardBox = document.getElementById('cards-box')
-    cardBox ? cardBox.style.height = cardBoxHeight + 'px' : '0px'
+    let cardBoxHeight = window.innerHeight - 210;
+    let cardBox = document.getElementById("cards-box");
+    cardBox ? (cardBox.style.height = cardBoxHeight + "px") : "0px";
 
     // 卡片容器高度自适应
-    window.onresize =()  =>{
-      let cardBoxHeight = window.innerHeight - 210
-      let cardBox = document.getElementById('cards-box')
-      cardBox ? cardBox.style.height = cardBoxHeight + 'px' : '0px'
-    }
+    window.onresize = () => {
+      let cardBoxHeight = window.innerHeight - 210;
+      let cardBox = document.getElementById("cards-box");
+      cardBox ? (cardBox.style.height = cardBoxHeight + "px") : "0px";
+    };
   }
 }
 </script>
@@ -428,12 +474,12 @@ export default class CardList extends Vue {
 }
 /* 头部 */
 .headerBtn {
-  display:flex;
-  justify-content:space-between;
+  display: flex;
+  justify-content: space-between;
   margin-top: 15px;
 }
 .headerBtn .el-input {
-  width: auto;
+  width: 190px;
 }
 .headerBtn-right .el-tag {
   cursor: pointer;
@@ -456,7 +502,7 @@ export default class CardList extends Vue {
   padding: 15px;
 }
 .light-green {
-  background: #67C23A;
+  background: #67c23a;
   padding: 3px 5px;
   border-radius: 50%;
   vertical-align: middle;

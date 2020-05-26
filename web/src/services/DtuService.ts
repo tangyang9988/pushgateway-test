@@ -3,8 +3,8 @@ import Channel from './Channel.ajax'
 export default class DtuService {
 
     /** 查询所有数采仪 */
-    public static Query(pageSize: number, pageIndex: number, projectId: number, rtuMN: string, rtuName: string): Promise<any> {
-        return Channel.invoke("rtu/query", { pageSize: pageSize, page: pageIndex, projectId: projectId, rtuMN: rtuMN, rtuName: rtuName });
+    public static Query(pageSize: number, pageIndex: number, projectId: number, online: number,rtuMN: string, rtuName: string): Promise<any> {
+        return Channel.invoke("rtu/query", { pageSize: pageSize, page: pageIndex, projectId: projectId,online: online, rtuMN: rtuMN, rtuName: rtuName });
     }
     /** 根据项目筛选数采仪列表 */
     public static QueryListByProjectId(pageSize: number, pageIndex: number, projectId: number): Promise<any> {
