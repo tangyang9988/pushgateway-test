@@ -229,7 +229,8 @@ export default class CardList extends Vue {
    */
   loadOnline() {
     DtuService.onlineCounts().then(res => {
-
+      this.onlineNum = res.data.onlineCount
+      this.offlineNum = res.data.offlineCount
     }).catch(err => {
       this.$message.error("设备数量接口错误:" + err)
     })
