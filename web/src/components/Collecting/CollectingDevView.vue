@@ -287,7 +287,7 @@
             :rules="factorRules"
             ref="formTail"
             :model="formTail"
-            label-width="85px"
+            label-width="100px"
             size="mini"
             class="demo-form-inline"
           >
@@ -336,7 +336,7 @@
                   <el-input v-model="formTail.factor_alias" style="width:150px"></el-input>
                 </el-form-item>
 
-                <span>报警范围</span>
+                <span style="margin-left:28px">报警范围</span>
                 <span style="color:red;font-size:12px;margin-left:20px" v-if="alarmError">报警下限不能超过上限</span>
                 <div style="display:flex;flex-direction:row;">
                   <el-form-item label="报警下限:" prop="alarm_lower">
@@ -348,7 +348,7 @@
                   
                 </div>
 
-                <span style="margin-right:10px;">模拟量</span>
+                <span style="margin-right:10px;margin-left:28px;">模拟量</span>
                 <el-checkbox v-model="formTail.is_analog" size="mini" @change="isAnalog">是否模拟量</el-checkbox>
                 <span style="color:red;font-size:12px;margin-left:20px" v-if="analogError">模拟量下限不能超过上限</span>
                 <div style="display:flex;flex-direction:row;" v-if="formTail.is_analog">

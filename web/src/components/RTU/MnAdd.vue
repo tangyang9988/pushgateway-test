@@ -70,10 +70,10 @@
             size="mini"
             @row-click="openDetails"
           >
-            <el-table-column prop="factorSt" label="ST系统编码"></el-table-column>
+            <el-table-column prop="factorSt" label="ST系统编码" width="90"></el-table-column>
             <el-table-column prop="factorCode" label="因子code"></el-table-column>
             <el-table-column prop="uploadSt" label="上传ST"></el-table-column>
-            <el-table-column prop="uploadFactorCode" label="上传因子code"></el-table-column>
+            <el-table-column prop="uploadFactorCode" label="上传因子code" width="100"></el-table-column>
             <el-table-column prop="ratio" label="系数"></el-table-column>
             <el-table-column prop="decimals" label="小数位数"></el-table-column>
             <el-table-column prop="num" label width="180">
@@ -91,7 +91,7 @@
           <el-form
             :model="factorForm"
             ref="factorForm"
-            label-width="100px"
+            label-width="110px"
             class="demo-ruleForm"
             :rules="factorRules"
             size="mini"

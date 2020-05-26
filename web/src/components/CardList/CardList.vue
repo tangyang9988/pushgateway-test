@@ -142,7 +142,7 @@ export default class CardList extends Vue {
   RtuName = null;
   RtuMn = null;
   proId = null;
-  online:any ="全部";
+  online:any =3;
   activeCard = null;
   curCard: any = null;
   isSelect: boolean = false; // 是否已经选中卡片
