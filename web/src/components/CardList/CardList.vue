@@ -88,7 +88,8 @@
               <div>
                 <img :class="card.Online?'light-green':'light-grey'" src="@/assets/images/light.png" alt="状态灯">
                 <!-- <el-button class="card-header-light" icon="el-icon-s-opportunity" :type="card.Online?'success':'info'" size="large"></el-button> -->
-                <span class="card-header-rtuName" @click="openRTUInfo(card)">{{card.RtuName}}</span>
+                <span class="card-header-rtuName" v-if="card.Online" @click="openRTUInfo(card)">{{card.RtuName}}</span>
+                <span class="card-header-rtuName" v-else >{{card.RtuName}}</span>
               </div>
               <div>
                 <el-button

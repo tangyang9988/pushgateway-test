@@ -30,7 +30,6 @@
           type="datetimerange"
           :picker-options="timesOptions"
           :clearable="false"
-          value-format="yyyy-MM-dd-HH-mm-ss"
         ></el-date-picker>
       </div>
 
@@ -134,7 +133,7 @@ export default class GmsAlarmLogs extends Vue {
     };
     for (let k in o) {
       if (new RegExp(`(${k})`).test(fmt)) {
-        let str = <any>o[k] + "";
+        let str = (o as any)[k] + "";
         fmt = fmt.replace(
           RegExp.$1,
           RegExp.$1.length === 1 ? str : ("00" + str).substr(str.length)

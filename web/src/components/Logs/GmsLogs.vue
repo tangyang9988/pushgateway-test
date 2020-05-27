@@ -46,7 +46,9 @@
                 <el-table-column prop="InsertTime" label="日期" width="180" align="center"  ></el-table-column>
                 <el-table-column prop="LogLevel" label="级别" width="80" align="center">
                     <template slot-scope="scope">
-                        <span :class="scope.row.LogLevel=='error'?'redColor':`${scope.row.LogLevel=='warning'?'yellowColor':'greenColor'}`">{{scope.row.LogLevel}}</span>
+                        <span v-if="scope.row.LogLevel=='error'" class="redColor">错误</span>
+                        <span v-else-if="scope.row.LogLevel=='info'" class="greenColor">正常</span>
+                        <span v-else class="yellowColor">警告</span>
                     </template>
                 </el-table-column>
                 <el-table-column prop="Field" label="记录者" width="180" align="center"></el-table-column>
@@ -149,6 +151,7 @@ export default class GmsLogs extends Vue {
             this.times[1]
         ).then((res:any) => {
             this.$set(this, 'logs', res.data);
+
             this.totalNum = res.total
             this.showPagination = true
             this.loading = false;
