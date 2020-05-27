@@ -118,7 +118,7 @@ export default class GmsAlarmLogs extends Vue {
   showPagination: boolean = true;
 
   /** 时间格式化 */
-  formatDate(date, fmt) {
+  formatDate(date:any, fmt:any) {
     if (/(y+)/.test(fmt)) {
       fmt = fmt.replace(
         RegExp.$1,
@@ -134,7 +134,7 @@ export default class GmsAlarmLogs extends Vue {
     };
     for (let k in o) {
       if (new RegExp(`(${k})`).test(fmt)) {
-        let str = o[k] + "";
+        let str = <any>o[k] + "";
         fmt = fmt.replace(
           RegExp.$1,
           RegExp.$1.length === 1 ? str : ("00" + str).substr(str.length)
