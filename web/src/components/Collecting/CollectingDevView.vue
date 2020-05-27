@@ -277,7 +277,7 @@
             <el-table-column prop="register_length" label="数据长度"></el-table-column>
             <el-table-column prop="name" label="操作">
               <template slot-scope="scope">
-                <el-button type="danger" size="mini" @click="onDelete(scope.$index, scope.row)">删除</el-button>
+                <el-link type="danger" icon="el-icon-delete" @click="onDelete(scope.$index, scope.row)">删除</el-link>
               </template>
             </el-table-column>
           </el-table>
@@ -335,8 +335,10 @@
                 <el-form-item label="别名:" prop="factor_alias">
                   <el-input v-model="formTail.factor_alias" style="width:150px"></el-input>
                 </el-form-item>
-
-                <span style="margin-left:28px">报警范围</span>
+                <div class="diamond-wrapper">
+                  <div class="diamond"></div>
+                  <span style="margin-left:5px">报警范围</span>
+                </div>
                 <span style="color:red;font-size:12px;margin-left:20px" v-if="alarmError">报警下限不能超过上限</span>
                 <div style="display:flex;flex-direction:row;">
                   <el-form-item label="报警下限:" prop="alarm_lower">
@@ -348,8 +350,11 @@
                   
                 </div>
 
-                <span style="margin-right:10px;margin-left:28px;">模拟量</span>
-                <el-checkbox v-model="formTail.is_analog" size="mini" @change="isAnalog">是否模拟量</el-checkbox>
+                <div class="diamond-wrapper">
+                  <div class="diamond"></div>
+                  <span style="margin-left:5px;margin-right:10px;">模拟量</span>
+                  <el-checkbox v-model="formTail.is_analog" size="mini" @change="isAnalog">是否模拟量</el-checkbox>
+                </div>
                 <span style="color:red;font-size:12px;margin-left:20px" v-if="analogError">模拟量下限不能超过上限</span>
                 <div style="display:flex;flex-direction:row;" v-if="formTail.is_analog">
                   <el-form-item label="模拟量下限:" prop="analog_lower" label-width="100px">
@@ -362,9 +367,9 @@
               </div>
 
               <div>
-                <el-form-item label="st:" label-width="100px" prop="st">
+                <!-- <el-form-item label="st:" label-width="100px" prop="st">
                   <el-input v-model.number="formTail.st" style="width:150px"></el-input>
-                </el-form-item>
+                </el-form-item> -->
                 <el-form-item label="寄存器序号:" label-width="100px" prop="register_addr">
                   <el-input v-model="formTail.register_addr" style="width:150px"></el-input>
                 </el-form-item>
@@ -386,7 +391,7 @@
               @click="factorsAdd('formTail')"
               size="mini"
             >因子修改</el-button>
-            <el-button type="primary" v-else @click="factorsAdd('formTail')" size="mini">因子新增</el-button>
+            <el-button type="primary" v-else @click="isStEmpty" size="mini">因子新增</el-button>
             <el-button type="primary" @click="resetFactorForm('formTail')" size="mini">因子重置</el-button>
             <br />
             <br />
@@ -1183,8 +1188,24 @@ export default class CollectingDevView extends Vue {
       this.currRowIndex
     );
   }
+  /**
+   * 验证st是否填写--在新增因子前先验证st
+   * 
+   */
+  isStEmpty() {
+    let flag: boolean = false
+    let ref:any = this.$refs[this.showForm?'formHeader':'formHeader2']
+    ref.validateField('st', (err:any) => {
+      if(err == '') {
+        this.formTail.st = this[this.showForm?'formHeader':'formHeader2'].st
+        this.factorsAdd('formTail')
+      }else {
+        this.$message.warning('请先填写设备ST')
+      }
+    })
+  }
   // 采集因子列表新加
-  factorsAdd(formName: string) {
+  async factorsAdd(formName: string) {
     let validateRes = false;
     //表单验证
     let ref:any = this.$refs[formName]
@@ -1205,9 +1226,16 @@ export default class CollectingDevView extends Vue {
     if (!this.isLineClick) {
       let form = this.formTail;
       this.factorList.push(form);
-      this.initFormTail();
+      
+      await this.initFormTail();
+      let formTail:any = this.$refs['formTail']
+      formTail.clearValidate()
+      
     } else {
-      this.initFormTail();
+      await this.initFormTail();
+      let formTail:any = this.$refs['formTail']
+      formTail.clearValidate()
+      
       this.isLineClick = false;
       (<any>this.$refs.factorList).setCurrentRow(); //清除当前选择的行
     }
@@ -1314,6 +1342,20 @@ export default class CollectingDevView extends Vue {
 .el-dropdown-link {
   cursor: pointer;
   color: #9b9b9b;
+}
+
+/* 菱形小方块样式 */
+.diamond-wrapper {
+  display: flex;
+  align-items: center;
+  color: rgb(60, 76, 132);
+}
+.diamond{
+  width: 8px;
+  height: 8px;
+  transform: rotateZ(45deg);
+  background: rgb(60, 76, 132);
+  margin-left: 15px;
 }
 </style>
 
