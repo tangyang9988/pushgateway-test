@@ -43,12 +43,23 @@
               </template>
             </el-menu-item>
           </div>
+          <div v-else-if="permission == '2'">
+            <el-menu-item
+              v-for="(sub,index) in opsMenus"
+              :index="sub.index"
+              :key="index"
+            >
+              <template slot="title">
+                <i v-if="sub.icon" :class="sub.icon"></i>
+                {{sub.title}}
+              </template>
+            </el-menu-item>
+          </div>
           <div v-else>
             <el-menu-item
               v-for="(sub,index) in commonMenus"
               :index="sub.index"
               :key="index"
-              
             >
               <template slot="title">
                 <i v-if="sub.icon" :class="sub.icon"></i>
@@ -71,10 +82,11 @@ import { Component, Vue } from "vue-property-decorator";
 
 @Component
 export default class Admin extends Vue {
+  //管理员
   menus = [
     { title: "首页", icon: "fas fa-server fa-fw", index: "/v/cardList" },
     // { title: "网关管理", icon: "fas fa-server fa-fw", index: "/v/cluster" },
-    { title: "设备管理", icon: "fas fa-microchip fa-fw", index: "/v/devices" },
+    // { title: "设备管理", icon: "fas fa-microchip fa-fw", index: "/v/devices" },
     // { title: '网关监控', icon: 'fas fa-tachometer-alt fa-fw', index: '/v/metrics' },
     // { title: '告警管理', icon: 'fas fa-exclamation-circle fa-fw', index: '/v/alerts' },
     { title: "日志消息", icon: "fas fa-hdd fa-fw", index: "/v/logs" },
@@ -84,18 +96,33 @@ export default class Admin extends Vue {
     { title: "项目管理", icon: "fas fa-industry fa-fw", index: "/v/prjs" },
     { title: "用户管理", icon: "fas fa-users fa-fw", index: "/v/users" }
   ];
+  //普通用户
   commonMenus = [
     { title: "首页", icon: "fas fa-server fa-fw", index: "/v/cardList" },
     // { title: "网关管理", icon: "fas fa-server fa-fw", index: "/v/cluster" },
-    { title: "设备管理", icon: "fas fa-microchip fa-fw", index: "/v/devices" },
+    // { title: "设备管理", icon: "fas fa-microchip fa-fw", index: "/v/devices" },
     // { title: '网关监控', icon: 'fas fa-tachometer-alt fa-fw', index: '/v/metrics' },
     // { title: '告警管理', icon: 'fas fa-exclamation-circle fa-fw', index: '/v/alerts' },
-    { title: "日志消息", icon: "fas fa-hdd fa-fw", index: "/v/logs" },
-    { title: "报警消息", icon: "fas fa-exclamation-circle fa-fw", index: "/v/alarm" },
-    { title: "系统工具", icon: "fas fa-tools fa-fw", index: "/v/tools" },
+    // { title: "日志消息", icon: "fas fa-hdd fa-fw", index: "/v/logs" },
+    // { title: "报警消息", icon: "fas fa-exclamation-circle fa-fw", index: "/v/alarm" },
+    // { title: "系统工具", icon: "fas fa-tools fa-fw", index: "/v/tools" },
     // { title: '安全管理', icon: 'fas fa-user-secret fa-fw', index: '/v/secret' },
-    { title: "项目管理", icon: "fas fa-industry fa-fw", index: "/v/prjs" },
-    { title: '用户管理', icon: 'fas fa-users fa-fw', index: '/v/users' }
+    // { title: "项目管理", icon: "fas fa-industry fa-fw", index: "/v/prjs" },
+    // { title: '用户管理', icon: 'fas fa-users fa-fw', index: '/v/users' }
+  ];
+    //运维
+  opsMenus = [
+    { title: "首页", icon: "fas fa-server fa-fw", index: "/v/cardList" },
+    // { title: "网关管理", icon: "fas fa-server fa-fw", index: "/v/cluster" },
+    // { title: "设备管理", icon: "fas fa-microchip fa-fw", index: "/v/devices" },
+    // { title: '网关监控', icon: 'fas fa-tachometer-alt fa-fw', index: '/v/metrics' },
+    // { title: '告警管理', icon: 'fas fa-exclamation-circle fa-fw', index: '/v/alerts' },
+    // { title: "日志消息", icon: "fas fa-hdd fa-fw", index: "/v/logs" },
+    { title: "报警消息", icon: "fas fa-exclamation-circle fa-fw", index: "/v/alarm" },
+    // { title: "系统工具", icon: "fas fa-tools fa-fw", index: "/v/tools" },
+    // { title: '安全管理', icon: 'fas fa-user-secret fa-fw', index: '/v/secret' },
+    // { title: "项目管理", icon: "fas fa-industry fa-fw", index: "/v/prjs" },
+    // { title: '用户管理', icon: 'fas fa-users fa-fw', index: '/v/users' }
   ];
   permission = "";
   heiGht =  window.innerHeight+'px'
