@@ -10,6 +10,10 @@ export default class CollectService {
     public static QueryProtocol(rtuMN: string): Promise<any> {
         return Channel.invoke("remoteControl/rtu/parameter", { rtuMN: rtuMN });
     }
+    /** 查询网络时间 */
+    public static QueryNetTime(): Promise<any> {
+        return Channel.invoke("time",{});
+    }
 
     /** 保存设备到数采仪 */
     public static SaveDeviceList(rtuMN: string, rtuNewDeviceList: []): Promise<any> {

@@ -1,13 +1,7 @@
 <template>
   <div class="mrle10">
-    <div>
-      <!-- <header-card-list :project="$route.query.project"></header-card-list> -->
-      <header-card-list :project="$route.query"></header-card-list>
-    </div>
+    <header-card-list></header-card-list>
 
-    <br />
-
-    <!-- 数采仪发送的消息 -->
     <el-row :gutter="20">
       <el-col :span="12">
         <el-card class="box-card">
@@ -16,7 +10,6 @@
               <img src="@/assets/images/pageTitle.png" alt="">
               <span>数采仪历史信息</span>
             </div>
-
             <el-button
               type="primary"
               size="small"
@@ -389,7 +382,3 @@ export default class rtu extends Vue {
   white-space:nowrap;
 }
 </style>
-
-
-
-
