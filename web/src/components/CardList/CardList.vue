@@ -33,7 +33,12 @@
             ></el-option>
           </el-select>
           <span style="margin-left:20px;">是否在线：</span>
-          <el-select size="medium" v-model="online" placeholder="请选择" @change="currentOnline">
+          <el-select 
+            v-model="online" 
+            placeholder="请选择" 
+            size="medium"
+            @change="currentOnline" 
+          >
             <el-option
               v-for="item in isOnlineOptions"
               :key="item.value"
@@ -142,7 +147,6 @@ export default class CardList extends Vue {
   RtuName = null;
   RtuMn = null;
   proId = null;
-  online:any =3;
   activeCard = null;
   curCard: any = null;
   isSelect: boolean = false; // 是否已经选中卡片
@@ -158,7 +162,12 @@ export default class CardList extends Vue {
   onlineNum:number = 0  // 在线数量
   offlineNum:number = 0 // 离线数量
   // 是否在线
+  online:any = '3'
   isOnlineOptions = [
+    {
+      value: "3",
+      label: "全部"
+    },
     {
       value: "1",
       label: "在线"
@@ -167,10 +176,6 @@ export default class CardList extends Vue {
       value: "0",
       label: "离线"
     },
-    {
-      value: "3",
-      label: "全部"
-    }
   ];
 
   /**
