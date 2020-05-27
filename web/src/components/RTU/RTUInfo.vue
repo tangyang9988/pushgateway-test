@@ -120,7 +120,7 @@
           
           <el-tabs v-model="currentActiveName" @tab-click="changeCurrentData">
             <el-tab-pane label="实时消息" name="currentMessage">
-              <el-table :data="currentTableData" style="width: 100%" max-height="350">
+              <el-table :data="currentTableData" style="width: 100%" max-height="350" :cell-style="{padding:'5px 0'}">
                 <el-table-column prop="date" label="日期"></el-table-column>
                 <el-table-column prop="code" label="操作"></el-table-column>
                 <el-table-column prop="flag" label="结果">
@@ -130,12 +130,22 @@
               </el-table>
             </el-tab-pane>
             <el-tab-pane label="TCP通道日志" name="tcpLog">
-              <el-table :data="tcpLog" style="width: 100%" max-height="350">
+              <el-table :data="tcpLog" style="width: 100%" max-height="350" :cell-style="{padding:'5px 0'}">
                 <el-table-column prop="insert_time" label="日期">
                   <!-- {{"2000-01-10T02:09:43Z" | formatDate}}  {{InsertTime}}-->
                   <!-- <div>{{tcpLog.InsertTime}} </div> -->
                 </el-table-column>
-                <el-table-column prop="content" label="操作"></el-table-column>
+                <el-table-column prop="content" label="操作">
+                  <template slot-scope="scope">
+                    <el-tooltip placement="top">
+                      <div slot="content" style="width:700px;font-size:12px;">
+                        {{ scope.row.content }}
+                      </div>
+                      <div class="font-hide">{{ scope.row.content }}</div>
+                    </el-tooltip>
+                  </template>
+
+                </el-table-column>
                 <!-- <el-table-column prop="flag" label="结果">
                   <div v-if="flag =='T'">成功</div>
                 <div v-else>失败</div>-->
@@ -153,7 +163,7 @@
             <!-- </el-table>
             </el-tab-pane>-->
             <el-tab-pane label="统计日志" name="statisticsLog">
-              <el-table :data="staLog" style="width: 100%" max-height="350">
+              <el-table :data="staLog" style="width: 100%" max-height="350" :cell-style="{padding:'5px 0'}">
                 <el-table-column prop="insert_time" label="日期"></el-table-column>
                 <el-table-column prop="content" label="操作"></el-table-column>
                 <!-- <el-table-column prop="flag" label="结果">
