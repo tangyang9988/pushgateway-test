@@ -1,6 +1,7 @@
 <template>
   <div class="mrle10">
-    <header-card-list></header-card-list>
+
+    <header-card-list :project="$route.query"></header-card-list>
 
     <el-row :gutter="20">
       <el-col :span="12">
